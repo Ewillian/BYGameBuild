@@ -1,27 +1,26 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class PlayerControler : MonoBehaviour
 {
-    private static int POWER_VALUE_MAX = 100;
-    private static int POWER_VALUE_MIN = 0;
-
-    private static int POWER_VALUE_GAIN = 10;
-    private static int POWER_VALUE_LOSE = 5;
+    private static float POWER_VALUE_GAIN = .1f;
+    private static float POWER_VALUE_LOSE = .15f;
 
     private Mouse _mouse;
+    private Slider _slider;
 
-    private int _currentPowerValue = 0;
     private bool _isPowerClick = false;
 
     private void Awake()
     {
+        _slider = GetComponent<Slider>();
         _mouse = Mouse.current;
     }
 
     private void Start()
     {
-        InvokeRepeating("UpdatePowerValue", 0, 1f);
+        InvokeRepeating("UpdatePowerValue", 0, .01f);
     }
 
     private void Update()
@@ -34,15 +33,15 @@ public class PlayerControler : MonoBehaviour
         Debug.Log("UpdatePowerValue");
         if (_isPowerClick)
         {
-            _currentPowerValue = _currentPowerValue + POWER_VALUE_GAIN < POWER_VALUE_MAX ? _currentPowerValue + POWER_VALUE_GAIN : POWER_VALUE_MAX;
+            _slider.value = _slider.value + POWER_VALUE_GAIN < _slider.maxValue ? _slider.value + POWER_VALUE_GAIN : _slider.maxValue;
             Debug.Log("Pressed left-click.");
         }
         else
         {
-            _currentPowerValue = _currentPowerValue - POWER_VALUE_LOSE > POWER_VALUE_MIN ? _currentPowerValue - POWER_VALUE_LOSE : POWER_VALUE_MIN;
+            _slider.value = _slider.value - POWER_VALUE_LOSE > _slider.minValue ? _slider.value - POWER_VALUE_LOSE : _slider.minValue;
             Debug.Log("Unpressed left-click.");
         }
 
-        Debug.Log("Power: " + _currentPowerValue);
+        Debug.Log("Power: " + _slider.value);
     }
 }
