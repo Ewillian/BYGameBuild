@@ -4,23 +4,51 @@ using UnityEngine.InputSystem;
 
 public class PlayerControler : MonoBehaviour
 {
+    #region Fields
+
     private static float POWER_VALUE_GAIN = .1f;
     private static float POWER_VALUE_LOSE = .15f;
 
     private Mouse _mouse;
+
+
+    [SerializeField]
     private Slider _slider;
+    public float PowerValue
+    {
+        get
+        {
+            return this._slider.value;
+        }
+        set
+        {
+            this._slider.value = value;
+        }
+    }
 
     private bool _isPowerClick = false;
+
+    #endregion Fields
+
+    #region Public methods
+
+    #endregion Public methods
+
+    #region Private methods
 
     private void Awake()
     {
         _slider = GetComponent<Slider>();
         _mouse = Mouse.current;
+
+        PowerValue = 0;
     }
 
     private void Start()
     {
+        // Starting in 0 seconds, a projectile will be launched every 0.1 seconds
         InvokeRepeating("UpdatePowerValue", 0, .01f);
+        // CancelInvoke("UpdatePowerValue");
     }
 
     private void Update()
@@ -30,18 +58,20 @@ public class PlayerControler : MonoBehaviour
 
     private void UpdatePowerValue()
     {
-        Debug.Log("UpdatePowerValue");
+        // Debug.Log("UpdatePowerValue");
         if (_isPowerClick)
         {
-            _slider.value = _slider.value + POWER_VALUE_GAIN < _slider.maxValue ? _slider.value + POWER_VALUE_GAIN : _slider.maxValue;
-            Debug.Log("Pressed left-click.");
+            PowerValue = PowerValue + POWER_VALUE_GAIN < _slider.maxValue ? PowerValue + POWER_VALUE_GAIN : _slider.maxValue;
+            // Debug.Log("Pressed left-click.");
         }
         else
         {
-            _slider.value = _slider.value - POWER_VALUE_LOSE > _slider.minValue ? _slider.value - POWER_VALUE_LOSE : _slider.minValue;
-            Debug.Log("Unpressed left-click.");
+            PowerValue = PowerValue - POWER_VALUE_LOSE > _slider.minValue ? PowerValue - POWER_VALUE_LOSE : _slider.minValue;
+            // Debug.Log("Unpressed left-click.");
         }
 
-        Debug.Log("Power: " + _slider.value);
+        // Debug.Log("Power: " + _slider.value);
     }
+
+    #endregion Private methods
 }
