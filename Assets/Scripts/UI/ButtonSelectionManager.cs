@@ -39,7 +39,7 @@ public class ButtonSelectionManager : MonoBehaviour
         else if(InputManager.instance.MovementInput.y < 0)
         {
             HandleNextButtonSelection(1);
-        }Z
+        }
     }
 
     private IEnumerator SetSelectedAfterOneFrame()
