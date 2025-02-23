@@ -11,7 +11,6 @@ public class ButtonSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPoin
     private Vector3 _startPosition;
     private Vector3 _originalScale;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _startPosition = transform.position;
