@@ -49,6 +49,17 @@ public class ButtonSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPoin
     public void OnSelect(BaseEventData eventData)
     {
         StartCoroutine(MoveButton(true));
+
+        ButtonSelectionManager.instance.lastSelectedButton = gameObject;
+
+        for (int i = 0; i < ButtonSelectionManager.instance.buttons.Length; i++)
+        {
+            if (ButtonSelectionManager.instance.buttons[i] == gameObject)
+            {
+                ButtonSelectionManager.instance.lastSelectedButtonIndex = i;
+                break;
+            }
+        }
     }
 
     public void OnDeselect(BaseEventData eventData)
