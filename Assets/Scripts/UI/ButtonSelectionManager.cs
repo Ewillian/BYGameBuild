@@ -53,25 +53,23 @@ public class ButtonSelectionManager : MonoBehaviour
 
     private IEnumerator SetEndAndStartButton()
     {
-        yield return null;
         for (int i = 0; i < buttons.Length; i++)
         {
             Navigation navigation = buttons[i].GetComponent<Button>().navigation;
             if(i == 0){
                 navigation.selectOnUp = buttons.LastOrDefault().GetComponent<Button>();
-                navigation.selectOnDown = buttons[Mathf.Clamp(i + 1, 0, buttons.Length - 1)].GetComponent<Button>();
-                buttons[i].GetComponent<Button>().navigation = navigation;
+                navigation.selectOnDown = buttons[1].GetComponent<Button>();
             } else if(i == buttons.Length - 1){
-                navigation.selectOnUp = buttons[Mathf.Clamp(i - 1, 0, buttons.Length - 1)].GetComponent<Button>();
+                navigation.selectOnUp = buttons[i - 1].GetComponent<Button>();
                 navigation.selectOnDown = buttons.FirstOrDefault().GetComponent<Button>();
-                buttons[i].GetComponent<Button>().navigation = navigation;
             }
             else{
-                navigation.selectOnUp = buttons[Mathf.Clamp(i - 1, 0, buttons.Length - 1)].GetComponent<Button>();
-                navigation.selectOnDown = buttons[Mathf.Clamp(i + 1, 0, buttons.Length - 1)].GetComponent<Button>();
-                buttons[i].GetComponent<Button>().navigation = navigation;
+                navigation.selectOnUp = buttons[i - 1].GetComponent<Button>();
+                navigation.selectOnDown = buttons[i + 1].GetComponent<Button>();
             }
+            buttons[i].GetComponent<Button>().navigation = navigation;
         }
+        yield return null;
     }
 
     private void HandleNextButtonSelection(int addition)

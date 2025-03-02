@@ -29,10 +29,10 @@ public class ButtonSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPoin
             transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsedTime / _moveTime);
             transform.localScale = Vector3.Lerp(startingScale, targetScale, elapsedTime / _moveTime);
             elapsedTime += Time.deltaTime;
-            yield return null;
         }
         transform.position = targetPosition;
         transform.localScale = targetScale;
+        yield return null;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
