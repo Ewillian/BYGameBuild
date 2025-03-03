@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manages the selection of buttons and handles navigation between them.
+/// </summary>
 public class ButtonSelectionManager : MonoBehaviour
 {
     #region Public Fields
@@ -123,7 +126,7 @@ public class ButtonSelectionManager : MonoBehaviour
             {
                 newIndex = 0;
             }
-    
+
             EventSystem.current.SetSelectedGameObject(buttons[newIndex]);
         }
     }
