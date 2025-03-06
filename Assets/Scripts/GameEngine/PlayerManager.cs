@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System;
 
 public class PlayerControler : MonoBehaviour
 {
@@ -9,11 +10,9 @@ public class PlayerControler : MonoBehaviour
     private static float POWER_VALUE_GAIN = .1f;
     private static float POWER_VALUE_LOSE = .15f;
 
-    private Mouse _mouse;
-
-
     [SerializeField]
     private Slider _slider;
+
     public float PowerValue
     {
         get
@@ -26,8 +25,6 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
-    private bool _isPowerClick = false;
-
     #endregion Fields
 
     #region Public methods
@@ -39,7 +36,6 @@ public class PlayerControler : MonoBehaviour
     private void Awake()
     {
         _slider = GetComponent<Slider>();
-        _mouse = Mouse.current;
 
         PowerValue = 0;
     }
@@ -53,13 +49,12 @@ public class PlayerControler : MonoBehaviour
 
     private void Update()
     {
-        _isPowerClick = (_mouse.leftButton.isPressed ? true : (_mouse.leftButton.wasReleasedThisFrame ? false : _isPowerClick));
+
     }
 
     private void UpdatePowerValue()
     {
-        // Debug.Log("UpdatePowerValue");
-        if (_isPowerClick)
+        if (InputManager.Action())
         {
             PowerValue = PowerValue + POWER_VALUE_GAIN < _slider.maxValue ? PowerValue + POWER_VALUE_GAIN : _slider.maxValue;
             // Debug.Log("Pressed left-click.");
