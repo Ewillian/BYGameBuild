@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System;
 
-public class PlayerControler : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
     #region Fields
 
