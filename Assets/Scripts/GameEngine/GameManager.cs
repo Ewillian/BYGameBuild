@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    #region Fields
+    #region Static fields
 
     private const int TRIGGER_DURING_TIMER_MAX = 3;
     private const int TARGET_DURATION_MAX = 3;
@@ -10,8 +10,15 @@ public class GameManager : MonoBehaviour
     private const int LOSE_SCORE = 10;
     private const int RANGE = 5;
 
+    #endregion Static fields
+
+    #region Fields
+
+    private EventManager _events;
 
     private PlayerManager _playerControler;
+
+    private MandoState _currentMandoState;
 
     private int _gameDuration = 120;
     private int _targetDuration = 3;
@@ -32,7 +39,9 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        _events = EventManager.GetInstance();
         _playerControler = transform.parent.GetComponentInChildren<PlayerManager>();
+        _currentMandoState = MandoState.Idle;
 
         InitTarget();
         InitBeforeMando();
@@ -57,12 +66,16 @@ public class GameManager : MonoBehaviour
     {
         mando = true;
         _triggerBeforeTimer = Random.Range(5, 25);
+
+        _currentMandoState = MandoState.Prepare;
     }
 
     private void InitDuringMando()
     {
         mando = false;
         _triggerDuringTimer = TRIGGER_DURING_TIMER_MAX;
+
+        _currentMandoState = MandoState.Check;
     }
 
     private void InitTarget()
@@ -70,6 +83,8 @@ public class GameManager : MonoBehaviour
         _targetScore = Random.Range(5, 95);
 
         _targetDuration = TARGET_DURATION_MAX;
+
+        _currentMandoState = MandoState.Idle;
     }
 
     // Call every seconds
@@ -79,6 +94,8 @@ public class GameManager : MonoBehaviour
         UpdateMando();
         UpdateTarget();
         UpdateGameDuration();
+
+        _events.Notify(EventType.Mando, (int) _currentMandoState);
 
         Debug.Log($"_targetScore: {_targetScore}");
         Debug.Log($"_score: {_score}");
@@ -94,6 +111,8 @@ public class GameManager : MonoBehaviour
         if (mando && InputManager.Action())
         {
             _score = _score - LOSE_SCORE <= 0 ? 0 : _score - LOSE_SCORE;
+
+            _currentMandoState = MandoState.Found;
         }
         else if (_playerControler.PowerValue >= _targetScore - RANGE && _playerControler.PowerValue <= _targetScore + RANGE)
         {

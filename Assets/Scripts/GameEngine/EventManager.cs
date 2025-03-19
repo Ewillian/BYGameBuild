@@ -17,10 +17,11 @@ public class EventManager
         {
             _instance = new EventManager();
         }
+
         return _instance;
     }
 
-    private void Subscribe(EventType eventType, IEventListener listener)
+    public void Subscribe(EventType eventType, IEventListener listener)
     {
         if (!_listeners.ContainsKey(eventType))
         {
@@ -30,7 +31,7 @@ public class EventManager
         _listeners[eventType].Add(listener);
     }
 
-    void UnSubscribe(EventType eventType, IEventListener listener)
+    public void UnSubscribe(EventType eventType, IEventListener listener)
     {
         if (_listeners.ContainsKey(eventType))
         {
@@ -38,11 +39,16 @@ public class EventManager
         }
     }
 
-    void Notify(EventType eventType, MandoState state)
+    public void Notify(EventType eventType, int data)
     {
+        if(!_listeners.ContainsKey(eventType) || _listeners[eventType].Count <= 0)
+        {
+            return;
+        }
+
         foreach (var listener in _listeners[eventType])
         {
-            listener.Update(state);
+            listener.EventUpdate(data);
         }
     }
 }

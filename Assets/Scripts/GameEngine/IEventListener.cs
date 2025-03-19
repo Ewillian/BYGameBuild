@@ -1,4 +1,4 @@
 public interface IEventListener
 {
-    void Update(MandoState state);
+    void EventUpdate(int data);
 }
