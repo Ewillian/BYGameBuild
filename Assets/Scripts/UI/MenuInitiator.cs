@@ -20,7 +20,7 @@ public class MenuInitiator : MonoBehaviour
         {
             MainPanel.SetActive(true);
             OptionPanel.SetActive(false);
-            ScorePanel.SetActive(false);
+            ScorePanel.SetActive(true);
             LeavePanel.SetActive(false);
     
             yield break;
