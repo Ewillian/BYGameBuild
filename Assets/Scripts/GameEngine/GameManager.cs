@@ -1,33 +1,40 @@
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     #region Static fields
 
-    private const int TRIGGER_DURING_TIMER_MAX = 3;
-    private const int TARGET_DURATION_MAX = 3;
+    private const int GAME_DURATION_MAX = 120;
     private const int GAIN_SCORE = 1;
     private const int LOSE_SCORE = 10;
-    private const int RANGE = 5;
+    private const int TARGET_DURATION_MAX = 10;
+    private const int TRIGGER_DURING_TIMER_MAX = 3;
+    private const int RANGE = 10;
 
     #endregion Static fields
 
     #region Fields
 
     private EventManager _events;
-
-    private PlayerManager _playerControler;
-
     private MandoState _currentMandoState;
+    private PlayerManager _playerControler;
+    private int _gameDuration;
+    private int _targetDuration;
+    private int _targetScore;
+    private int _score;
 
-    private int _gameDuration = 120;
-    private int _targetDuration = 3;
-    private int _targetScore = 0;
-    private int _score = 0;
+    private bool _mando = false;
+    private int _triggerBeforeTimer;
+    private int _triggerDuringTimer;
 
-    private bool mando = false;
-    private int _triggerBeforeTimer = 0;
-    private int _triggerDuringTimer = 3;
+    private TMP_Text _gameDurationUiDebug;
+    private TMP_Text _scoreUiDebug;
+    private TMP_Text _targetScoreUiDebug;
+    private TMP_Text _mandoCheckUiDebug;
+    private TMP_Text _triggerBeforeTimerUiDebug;
+    private TMP_Text _triggerDuringTimerUiDebug;
 
     #endregion Fields
 
@@ -43,6 +50,14 @@ public class GameManager : MonoBehaviour
         _playerControler = transform.parent.GetComponentInChildren<PlayerManager>();
         _currentMandoState = MandoState.Idle;
 
+        _gameDurationUiDebug = GameObject.Find("_gameDurationValue").GetComponent<TMP_Text>();
+        _scoreUiDebug = GameObject.Find("_scoreValue").GetComponent<TMP_Text>();
+        _targetScoreUiDebug = GameObject.Find("_targetScoreValue").GetComponent<TMP_Text>();
+        _mandoCheckUiDebug = GameObject.Find("_mandoCheckValue").GetComponent<TMP_Text>();
+        _triggerBeforeTimerUiDebug = GameObject.Find("_triggerBeforeTimerValue").GetComponent<TMP_Text>();
+        _triggerDuringTimerUiDebug = GameObject.Find("_triggerDuringTimerValue").GetComponent<TMP_Text>();
+
+        InitGameDuration();
         InitTarget();
         InitBeforeMando();
         InitDuringMando();
@@ -62,29 +77,34 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void InitGameDuration()
+    {
+        _gameDuration = GAME_DURATION_MAX;
+    }
+
+    private void InitTarget()
+    {
+        _targetScore = UnityEngine.Random.Range(5, 95);
+
+        _targetDuration = TARGET_DURATION_MAX;
+
+        _currentMandoState = MandoState.Idle;
+    }
+
     private void InitBeforeMando()
     {
-        mando = true;
-        _triggerBeforeTimer = Random.Range(5, 25);
+        _mando = true;
+        _triggerBeforeTimer = UnityEngine.Random.Range(5, 25);
 
         _currentMandoState = MandoState.Prepare;
     }
 
     private void InitDuringMando()
     {
-        mando = false;
+        _mando = false;
         _triggerDuringTimer = TRIGGER_DURING_TIMER_MAX;
 
         _currentMandoState = MandoState.Check;
-    }
-
-    private void InitTarget()
-    {
-        _targetScore = Random.Range(5, 95);
-
-        _targetDuration = TARGET_DURATION_MAX;
-
-        _currentMandoState = MandoState.Idle;
     }
 
     // Call every seconds
@@ -97,18 +117,12 @@ public class GameManager : MonoBehaviour
 
         _events.Notify(EventType.Mando, (int) _currentMandoState);
 
-        Debug.Log($"_targetScore: {_targetScore}");
-        Debug.Log($"_score: {_score}");
-        Debug.Log($"_gameDuration: {_gameDuration}");
-
-        Debug.Log($"mando check: {mando}");
-        Debug.Log($"_triggerBeforeTimer: {_triggerBeforeTimer}");
-        Debug.Log($"_triggerDuringTimer: {_triggerDuringTimer}");
+        UpdateDebugUi();
     }
 
     private void UpdateScore()
     {
-        if (mando && InputManager.Action())
+        if (_mando && InputManager.Action())
         {
             _score = _score - LOSE_SCORE <= 0 ? 0 : _score - LOSE_SCORE;
 
@@ -122,9 +136,9 @@ public class GameManager : MonoBehaviour
 
     private void UpdateMando()
     {
-        if (mando)
+        if (_mando)
         {
-            // Time during mando check
+            // Time during _mando check
             _triggerDuringTimer -= 1;
             if (_triggerDuringTimer <= 0)
             {
@@ -133,7 +147,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // Time before mando check
+            // Time before _mando check
             _triggerBeforeTimer -= 1;
             if(_triggerBeforeTimer <= 0)
             {
@@ -158,7 +172,64 @@ public class GameManager : MonoBehaviour
         {
             CancelInvoke("UpdateGameTime");
 
-            _gameDuration = 10;
+            InitGameDuration();
+        }
+    }
+    
+    private void UpdateDebugUi()
+    {
+        if(!_gameDurationUiDebug.IsUnityNull())
+        {
+            _gameDurationUiDebug.SetText(_gameDuration.ToString());
+        }
+        else
+        {
+            Debug.Log($"_gameDuration: {_gameDuration}");
+        }
+
+        if(!_scoreUiDebug.IsUnityNull())
+        {
+            _scoreUiDebug.SetText(_score.ToString());
+        }
+        else
+        {
+            Debug.Log($"_score: {_score}");
+        }
+
+        if(!_targetScoreUiDebug.IsUnityNull())
+        {
+            _targetScoreUiDebug.SetText(_targetScore.ToString());
+        }
+        else
+        {
+            Debug.Log($"_targetScore: {_targetScore}");
+        }
+
+        if(!_mandoCheckUiDebug.IsUnityNull())
+        {
+            _mandoCheckUiDebug.SetText(_mando.ToString());
+        }
+        else
+        {
+            Debug.Log($"_mando check: {_mando}");
+        }
+
+        if(!_triggerBeforeTimerUiDebug.IsUnityNull())
+        {
+            _triggerBeforeTimerUiDebug.SetText(_triggerBeforeTimer.ToString());
+        }
+        else
+        {
+            Debug.Log($"_triggerBeforeTimer: {_triggerBeforeTimer}");
+        }
+
+        if(!_triggerDuringTimerUiDebug.IsUnityNull())
+        {
+            _triggerDuringTimerUiDebug.SetText(_triggerDuringTimer.ToString());
+        }
+        else
+        {
+            Debug.Log($"_triggerDuringTimer: {_triggerDuringTimer}");
         }
     }
 
