@@ -50,12 +50,41 @@ public class GameManager : MonoBehaviour
         _playerControler = transform.parent.GetComponentInChildren<PlayerManager>();
         _currentMandoState = MandoState.Idle;
 
-        _gameDurationUiDebug = GameObject.Find("_gameDurationValue").GetComponent<TMP_Text>();
-        _scoreUiDebug = GameObject.Find("_scoreValue").GetComponent<TMP_Text>();
-        _targetScoreUiDebug = GameObject.Find("_targetScoreValue").GetComponent<TMP_Text>();
-        _mandoCheckUiDebug = GameObject.Find("_mandoCheckValue").GetComponent<TMP_Text>();
-        _triggerBeforeTimerUiDebug = GameObject.Find("_triggerBeforeTimerValue").GetComponent<TMP_Text>();
-        _triggerDuringTimerUiDebug = GameObject.Find("_triggerDuringTimerValue").GetComponent<TMP_Text>();
+        GameObject gameDurationUiDebug_GameObject = GameObject.Find("_gameDurationValue");
+        if(gameDurationUiDebug_GameObject != null)
+        {
+            _gameDurationUiDebug = gameDurationUiDebug_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject scoreValueUiDebug_GameObject = GameObject.Find("_scoreValue");
+        if(scoreValueUiDebug_GameObject != null)
+        {
+            _scoreUiDebug = scoreValueUiDebug_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject targetScoreValue_GameObject = GameObject.Find("_targetScoreValue");
+        if(targetScoreValue_GameObject != null)
+        {
+            _targetScoreUiDebug = targetScoreValue_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject mandoCheckValue_GameObject = GameObject.Find("_mandoCheckValue");
+        if(mandoCheckValue_GameObject != null)
+        {
+            _mandoCheckUiDebug = mandoCheckValue_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject triggerBeforeTimerValue_GameObject = GameObject.Find("_triggerBeforeTimerValue");
+        if(triggerBeforeTimerValue_GameObject != null)
+        {
+            _triggerBeforeTimerUiDebug = triggerBeforeTimerValue_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject triggerDuringTimerValue_GameObject = GameObject.Find("_triggerDuringTimerValue");
+        if(triggerDuringTimerValue_GameObject != null)
+        {
+            _triggerDuringTimerUiDebug = triggerDuringTimerValue_GameObject.GetComponent<TMP_Text>();
+        }
 
         InitGameDuration();
         InitTarget();
