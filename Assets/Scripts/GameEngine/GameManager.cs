@@ -1,26 +1,40 @@
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    #region Fields
+    #region Static fields
 
-    private const int TRIGGER_DURING_TIMER_MAX = 3;
-    private const int TARGET_DURATION_MAX = 3;
+    private const int GAME_DURATION_MAX = 120;
     private const int GAIN_SCORE = 1;
     private const int LOSE_SCORE = 10;
-    private const int RANGE = 5;
+    private const int TARGET_DURATION_MAX = 10;
+    private const int TRIGGER_DURING_TIMER_MAX = 3;
+    private const int RANGE = 10;
 
+    #endregion Static fields
 
+    #region Fields
+
+    private EventManager _events;
+    private MandoState _currentMandoState;
     private PlayerManager _playerControler;
+    private int _gameDuration;
+    private int _targetDuration;
+    private int _targetScore;
+    private int _score;
 
-    private int _gameDuration = 120;
-    private int _targetDuration = 3;
-    private int _targetScore = 0;
-    private int _score = 0;
+    private bool _mando = false;
+    private int _triggerBeforeTimer;
+    private int _triggerDuringTimer;
 
-    private bool mando = false;
-    private int _triggerBeforeTimer = 0;
-    private int _triggerDuringTimer = 3;
+    private TMP_Text _gameDurationUiDebug;
+    private TMP_Text _scoreUiDebug;
+    private TMP_Text _targetScoreUiDebug;
+    private TMP_Text _mandoCheckUiDebug;
+    private TMP_Text _triggerBeforeTimerUiDebug;
+    private TMP_Text _triggerDuringTimerUiDebug;
 
     #endregion Fields
 
@@ -32,8 +46,47 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        _events = EventManager.GetInstance();
         _playerControler = transform.parent.GetComponentInChildren<PlayerManager>();
+        _currentMandoState = MandoState.Idle;
 
+        GameObject gameDurationUiDebug_GameObject = GameObject.Find("_gameDurationValue");
+        if(gameDurationUiDebug_GameObject != null)
+        {
+            _gameDurationUiDebug = gameDurationUiDebug_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject scoreValueUiDebug_GameObject = GameObject.Find("_scoreValue");
+        if(scoreValueUiDebug_GameObject != null)
+        {
+            _scoreUiDebug = scoreValueUiDebug_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject targetScoreValue_GameObject = GameObject.Find("_targetScoreValue");
+        if(targetScoreValue_GameObject != null)
+        {
+            _targetScoreUiDebug = targetScoreValue_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject mandoCheckValue_GameObject = GameObject.Find("_mandoCheckValue");
+        if(mandoCheckValue_GameObject != null)
+        {
+            _mandoCheckUiDebug = mandoCheckValue_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject triggerBeforeTimerValue_GameObject = GameObject.Find("_triggerBeforeTimerValue");
+        if(triggerBeforeTimerValue_GameObject != null)
+        {
+            _triggerBeforeTimerUiDebug = triggerBeforeTimerValue_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject triggerDuringTimerValue_GameObject = GameObject.Find("_triggerDuringTimerValue");
+        if(triggerDuringTimerValue_GameObject != null)
+        {
+            _triggerDuringTimerUiDebug = triggerDuringTimerValue_GameObject.GetComponent<TMP_Text>();
+        }
+
+        InitGameDuration();
         InitTarget();
         InitBeforeMando();
         InitDuringMando();
@@ -53,23 +106,34 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void InitBeforeMando()
+    private void InitGameDuration()
     {
-        mando = true;
-        _triggerBeforeTimer = Random.Range(5, 25);
-    }
-
-    private void InitDuringMando()
-    {
-        mando = false;
-        _triggerDuringTimer = TRIGGER_DURING_TIMER_MAX;
+        _gameDuration = GAME_DURATION_MAX;
     }
 
     private void InitTarget()
     {
-        _targetScore = Random.Range(5, 95);
+        _targetScore = UnityEngine.Random.Range(5, 95);
 
         _targetDuration = TARGET_DURATION_MAX;
+
+        _currentMandoState = MandoState.Idle;
+    }
+
+    private void InitBeforeMando()
+    {
+        _mando = true;
+        _triggerBeforeTimer = UnityEngine.Random.Range(5, 25);
+
+        _currentMandoState = MandoState.Prepare;
+    }
+
+    private void InitDuringMando()
+    {
+        _mando = false;
+        _triggerDuringTimer = TRIGGER_DURING_TIMER_MAX;
+
+        _currentMandoState = MandoState.Check;
     }
 
     // Call every seconds
@@ -80,20 +144,18 @@ public class GameManager : MonoBehaviour
         UpdateTarget();
         UpdateGameDuration();
 
-        Debug.Log($"_targetScore: {_targetScore}");
-        Debug.Log($"_score: {_score}");
-        Debug.Log($"_gameDuration: {_gameDuration}");
+        _events.Notify(EventType.Mando, (int) _currentMandoState);
 
-        Debug.Log($"mando check: {mando}");
-        Debug.Log($"_triggerBeforeTimer: {_triggerBeforeTimer}");
-        Debug.Log($"_triggerDuringTimer: {_triggerDuringTimer}");
+        UpdateDebugUi();
     }
 
     private void UpdateScore()
     {
-        if (mando && InputManager.Action())
+        if (_mando && InputManager.Action())
         {
             _score = _score - LOSE_SCORE <= 0 ? 0 : _score - LOSE_SCORE;
+
+            _currentMandoState = MandoState.Found;
         }
         else if (_playerControler.PowerValue >= _targetScore - RANGE && _playerControler.PowerValue <= _targetScore + RANGE)
         {
@@ -103,9 +165,9 @@ public class GameManager : MonoBehaviour
 
     private void UpdateMando()
     {
-        if (mando)
+        if (_mando)
         {
-            // Time during mando check
+            // Time during _mando check
             _triggerDuringTimer -= 1;
             if (_triggerDuringTimer <= 0)
             {
@@ -114,7 +176,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // Time before mando check
+            // Time before _mando check
             _triggerBeforeTimer -= 1;
             if(_triggerBeforeTimer <= 0)
             {
@@ -139,7 +201,64 @@ public class GameManager : MonoBehaviour
         {
             CancelInvoke("UpdateGameTime");
 
-            _gameDuration = 10;
+            InitGameDuration();
+        }
+    }
+    
+    private void UpdateDebugUi()
+    {
+        if(!_gameDurationUiDebug.IsUnityNull())
+        {
+            _gameDurationUiDebug.SetText(_gameDuration.ToString());
+        }
+        else
+        {
+            Debug.Log($"_gameDuration: {_gameDuration}");
+        }
+
+        if(!_scoreUiDebug.IsUnityNull())
+        {
+            _scoreUiDebug.SetText(_score.ToString());
+        }
+        else
+        {
+            Debug.Log($"_score: {_score}");
+        }
+
+        if(!_targetScoreUiDebug.IsUnityNull())
+        {
+            _targetScoreUiDebug.SetText(_targetScore.ToString());
+        }
+        else
+        {
+            Debug.Log($"_targetScore: {_targetScore}");
+        }
+
+        if(!_mandoCheckUiDebug.IsUnityNull())
+        {
+            _mandoCheckUiDebug.SetText(_mando.ToString());
+        }
+        else
+        {
+            Debug.Log($"_mando check: {_mando}");
+        }
+
+        if(!_triggerBeforeTimerUiDebug.IsUnityNull())
+        {
+            _triggerBeforeTimerUiDebug.SetText(_triggerBeforeTimer.ToString());
+        }
+        else
+        {
+            Debug.Log($"_triggerBeforeTimer: {_triggerBeforeTimer}");
+        }
+
+        if(!_triggerDuringTimerUiDebug.IsUnityNull())
+        {
+            _triggerDuringTimerUiDebug.SetText(_triggerDuringTimer.ToString());
+        }
+        else
+        {
+            Debug.Log($"_triggerDuringTimer: {_triggerDuringTimer}");
         }
     }
 

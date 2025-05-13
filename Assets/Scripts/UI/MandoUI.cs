@@ -1,0 +1,44 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MandoUI : MonoBehaviour , IEventListener
+{
+    private EventManager _events;
+    [SerializeField] private List<GameObject> _mandoVisuals;
+
+    private void Awake()
+    {
+        _events = EventManager.GetInstance();
+        setVisual(0);
+    }
+
+    private void Start()
+    {
+        _events.Subscribe(EventType.Mando, this);
+    }
+
+    void Update()
+    {
+        
+    }
+
+    public void EventUpdate(int data)
+    {
+        setVisual(data);
+    }
+
+    public void setVisual(int targetMando)
+    {
+        for(var i = 0; i < _mandoVisuals.Count; i++)
+        {
+            bool current = false;
+            
+            if(targetMando == i)
+            {
+                current = true;
+            }
+
+            _mandoVisuals[i].SetActive(current);
+        }
+    }
+}
