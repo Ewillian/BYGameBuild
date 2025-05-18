@@ -19,8 +19,8 @@ public class MenuInitiator : MonoBehaviour
         private IEnumerator InitiateMenu()
         {
             MainPanel.SetActive(true);
-            OptionPanel.SetActive(false);
-            ScorePanel.SetActive(true);
+            OptionPanel.SetActive(true);
+            ScorePanel.SetActive(false);
             LeavePanel.SetActive(false);
     
             yield break;
