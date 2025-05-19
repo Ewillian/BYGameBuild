@@ -18,6 +18,9 @@ public class SettingsManager : MonoBehaviour
     public Slider masterSlider;
     public Slider musicSlider;
     public Slider sfxSlider;
+    public TextMeshProUGUI MasterVolumeTextOutput;
+    public TextMeshProUGUI MusicVolumeTextOutput;
+    public TextMeshProUGUI SFXVolumeTextOutput;
     public AudioMixer audioMixer;
 
     [Header("Keybinds")]
@@ -112,8 +115,10 @@ public class SettingsManager : MonoBehaviour
     /// 0.001f → -60 dB environ (quasiment silence)
     public void SetMasterVolume(float volume)
     {
+        string volumeTextValue = Mathf.Round(volume * 100).ToString();
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(Mathf.Clamp(volume, 0.001f, 1f)) * 20);
         PlayerPrefs.SetFloat("MasterVolume", volume);
+        MasterVolumeTextOutput.SetText(volumeTextValue);
     }
 
     /// <summary>
@@ -122,8 +127,10 @@ public class SettingsManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetMusicVolume(float volume)
     {
+        string volumeTextValue = Mathf.Round(volume * 100).ToString();
         audioMixer.SetFloat("MusicVolume", Mathf.Log10(Mathf.Clamp(volume, 0.001f, 1f)) * 20);
         PlayerPrefs.SetFloat("MusicVolume", volume);
+        MusicVolumeTextOutput.SetText(volumeTextValue);
     }
 
     /// <summary>
@@ -132,8 +139,10 @@ public class SettingsManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetSFXVolume(float volume)
     {
+        string volumeTextValue = Mathf.Round(volume * 100).ToString();
         audioMixer.SetFloat("SFXVolume", Mathf.Log10(Mathf.Clamp(volume, 0.001f, 1f)) * 20);
         PlayerPrefs.SetFloat("SFXVolume", volume);
+        SFXVolumeTextOutput.SetText(volumeTextValue);
     }
 
     /// <summary>
