@@ -1,8 +1,6 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Analytics;
 using UnityEngine.InputSystem;
-using UnityEngine.iOS;
 
 public class MultiDeviceKeybindManager : MonoBehaviour
 {
@@ -90,8 +88,6 @@ public class MultiDeviceKeybindManager : MonoBehaviour
 
         action.Disable();
 
-        var oldKeyDisplayValue = GetDisplayName(bindingIndex);
-
         var rebindOperation = action.PerformInteractiveRebinding(bindingIndex)
             .WithCancelingThrough("<Keyboard>/escape")
             .OnMatchWaitForAnother(0.1f)
@@ -107,6 +103,8 @@ public class MultiDeviceKeybindManager : MonoBehaviour
             .OnComplete(operation =>
             {
                 var selectedControl = operation.selectedControl;
+
+                Debug.Log(selectedControl.path);
 
                 action.ApplyBindingOverride(bindingIndex, selectedControl.path);
                 PlayerPrefs.SetString($"{action.name}_binding_{bindingIndex}", selectedControl.path);
@@ -183,9 +181,9 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         foreach (var bindings in action.bindings)
-         {
-             Debug.Log(bindings.ToDisplayString());
-         }
+        //  foreach (var bindings in action.bindings)
+        //  {
+        //      Debug.Log(bindings.ToDisplayString());
+        //  }
     }
 }
