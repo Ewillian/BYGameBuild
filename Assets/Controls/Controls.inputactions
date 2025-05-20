@@ -534,6 +534,28 @@
                     "action": "PrincipalAction",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d6846db6-fe02-4978-b27b-c5af890d9e7c",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrincipalAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d01ec5d6-dfb5-4e23-a290-403db52005db",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrincipalAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Audio;
-using System;
 using System.Collections.Generic;
 
 /// <summary>
@@ -27,8 +26,6 @@ public class SettingsManager : MonoBehaviour
     public TextMeshProUGUI keyBindText;
 
     private Resolution[] resolutions;
-    private KeyCode assignedKey = KeyCode.Space;
-    private bool waitingForKey = false;
 
     /// <summary>
     /// Setups the different settings ui elements
@@ -37,7 +34,6 @@ public class SettingsManager : MonoBehaviour
     {
         SetupResolutions();
         SetupVolumes();
-        SetupKeybind();
         SetupLanguage();
     }
 
@@ -143,48 +139,6 @@ public class SettingsManager : MonoBehaviour
         audioMixer.SetFloat("SFXVolume", Mathf.Log10(Mathf.Clamp(volume, 0.001f, 1f)) * 20);
         PlayerPrefs.SetFloat("SFXVolume", volume);
         SFXVolumeTextOutput.SetText(volumeTextValue);
-    }
-
-    /// <summary>
-    /// Setup the saved keybind and display it on the setting ui
-    /// </summary>
-    void SetupKeybind()
-    {
-        string savedKey = PlayerPrefs.GetString("KeyBind", "Space");
-        assignedKey = (KeyCode)Enum.Parse(typeof(KeyCode), savedKey);
-        keyBindText.text = assignedKey.ToString();
-    }
-
-    /// <summary>
-    /// Update used only by the keybinding setting
-    /// </summary>
-    void Update()
-    {
-        if (waitingForKey)
-        {
-            foreach (KeyCode key in Enum.GetValues(typeof(KeyCode)))
-            {
-                if (Input.GetKeyDown(key))
-                {
-                    assignedKey = key;
-                    waitingForKey = false;
-                    keyBindText.text = assignedKey.ToString();
-                    PlayerPrefs.SetString("KeyBind", assignedKey.ToString());
-                    break;
-                }
-            }
-        }
-    }
-
-    public void StartKeyBinding()
-    {
-        waitingForKey = true;
-        keyBindText.text = "Press a key...";
-    }
-
-    public KeyCode GetAssignedKey()
-    {
-        return assignedKey;
     }
 
     // -------- Language --------
