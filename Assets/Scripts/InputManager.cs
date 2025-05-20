@@ -75,6 +75,7 @@ public class InputManager : MonoBehaviour
             Debug.LogError("PlayerInput not found");
             return;
         }
+        
         _movementAction = PlayerInput.actions["Navigate"];
         _principalAction = PlayerInput.actions["PrincipalAction"];
     }

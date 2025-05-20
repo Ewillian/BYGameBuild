@@ -22,9 +22,6 @@ public class SettingsManager : MonoBehaviour
     public TextMeshProUGUI SFXVolumeTextOutput;
     public AudioMixer audioMixer;
 
-    [Header("Keybinds")]
-    public TextMeshProUGUI keyBindText;
-
     private Resolution[] resolutions;
 
     /// <summary>
