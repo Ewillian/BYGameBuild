@@ -201,7 +201,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 20129803}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 371931101}
+        m_TargetAssemblyTypeName: MultiDeviceKeybindManager, Assembly-CSharp
+        m_MethodName: StartRebind
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Gamepad
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &20129803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4318,7 +4330,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1968058751}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 371931101}
+        m_TargetAssemblyTypeName: MultiDeviceKeybindManager, Assembly-CSharp
+        m_MethodName: StartRebind
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Keyboard
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1968058751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5020,6 +5044,38 @@ PrefabInstance:
       value: 'Touche d''action
 
 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678984920250830397, guid: 5fdb9f6e73c9abc40a725c133f29e064, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678984920250830397, guid: 5fdb9f6e73c9abc40a725c133f29e064, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678984920250830397, guid: 5fdb9f6e73c9abc40a725c133f29e064, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 371931101}
+    - target: {fileID: 7678984920250830397, guid: 5fdb9f6e73c9abc40a725c133f29e064, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678984920250830397, guid: 5fdb9f6e73c9abc40a725c133f29e064, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartRebind
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678984920250830397, guid: 5fdb9f6e73c9abc40a725c133f29e064, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MultiDeviceKeybindManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678984920250830397, guid: 5fdb9f6e73c9abc40a725c133f29e064, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Mouse
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678984920250830397, guid: 5fdb9f6e73c9abc40a725c133f29e064, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 9132588074260368038, guid: 5fdb9f6e73c9abc40a725c133f29e064, type: 3}
       propertyPath: m_Name
