@@ -6,18 +6,12 @@ public class GameManager : MonoBehaviour
 {
     #region Static fields
 
-    private const int GAME_DURATION_MAX = 120;
-    private const int GAIN_SCORE = 1;
-    private const int LOSE_SCORE = 10;
-    private const int TARGET_DURATION_MAX = 10;
-    private const int TRIGGER_DURING_TIMER_MAX = 3;
-    private const int RANGE = 10;
-
     #endregion Static fields
 
     #region Fields
 
     private EventManager _events;
+    private DifficultyManager _difficulty;
     private MandoState _currentMandoState;
     private PlayerManager _playerControler;
     private int _gameDuration;
@@ -47,6 +41,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _events = EventManager.GetInstance();
+        _difficulty = DifficultyManager.GetInstance();
+        _difficulty.SetDifficulty(DifficultyType.Normal);
         _playerControler = transform.parent.GetComponentInChildren<PlayerManager>();
         _currentMandoState = MandoState.Idle;
 
@@ -108,14 +104,14 @@ public class GameManager : MonoBehaviour
 
     private void InitGameDuration()
     {
-        _gameDuration = GAME_DURATION_MAX;
+        _gameDuration = _difficulty.GetDifficultyStats().GAME_DURATION_MAX;
     }
 
     private void InitTarget()
     {
         _targetScore = UnityEngine.Random.Range(5, 95);
 
-        _targetDuration = TARGET_DURATION_MAX;
+        _targetDuration = _difficulty.GetDifficultyStats().TARGET_DURATION_MAX;
 
         _currentMandoState = MandoState.Idle;
     }
@@ -131,7 +127,7 @@ public class GameManager : MonoBehaviour
     private void InitDuringMando()
     {
         _mando = false;
-        _triggerDuringTimer = TRIGGER_DURING_TIMER_MAX;
+        _triggerDuringTimer = _difficulty.GetDifficultyStats().TRIGGER_DURING_TIMER_MAX;
 
         _currentMandoState = MandoState.Check;
     }
@@ -153,13 +149,13 @@ public class GameManager : MonoBehaviour
     {
         if (_mando && InputManager.Action())
         {
-            _score = _score - LOSE_SCORE <= 0 ? 0 : _score - LOSE_SCORE;
+            _score = _score - _difficulty.GetDifficultyStats().LOSE_SCORE <= 0 ? 0 : _score - _difficulty.GetDifficultyStats().LOSE_SCORE;
 
             _currentMandoState = MandoState.Found;
         }
-        else if (_playerControler.PowerValue >= _targetScore - RANGE && _playerControler.PowerValue <= _targetScore + RANGE)
+        else if (_playerControler.PowerValue >= _targetScore - _difficulty.GetDifficultyStats().RANGE && _playerControler.PowerValue <= _targetScore + _difficulty.GetDifficultyStats().RANGE)
         {
-            _score += GAIN_SCORE;
+            _score += _difficulty.GetDifficultyStats().GAIN_SCORE;
         }
     }
 
