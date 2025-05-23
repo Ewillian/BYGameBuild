@@ -152,7 +152,7 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     string GetDisplayName(int bindingIndex)
     {
         return InputControlPath.ToHumanReadableString(
-            action.bindings[bindingIndex].effectivePath,
+            action.GetBindingDisplayString(bindingIndex),
             InputControlPath.HumanReadableStringOptions.UseShortNames |
             InputControlPath.HumanReadableStringOptions.OmitDevice
         );
