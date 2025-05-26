@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Audio;
-using System.Collections.Generic;
 
 /// <summary>
 /// 
@@ -10,7 +9,6 @@ using System.Collections.Generic;
 public class SettingsManager : MonoBehaviour
 {
     [Header("Visual settings")]
-    public TMP_Dropdown resolutionDropdown;
     public TMP_Dropdown languageDropdown;
 
     [Header("Volume settings")]
@@ -22,59 +20,13 @@ public class SettingsManager : MonoBehaviour
     public TextMeshProUGUI SFXVolumeTextOutput;
     public AudioMixer audioMixer;
 
-    private Resolution[] resolutions;
-
     /// <summary>
     /// Setups the different settings ui elements
     /// </summary>
     void Start()
     {
-        SetupResolutions();
         SetupVolumes();
         SetupLanguage();
-    }
-
-    /// <summary>
-    /// Setup the resolution dropdown values and set the default as used by the player
-    /// </summary>
-    void SetupResolutions()
-    {
-        resolutions = Screen.resolutions;
-        resolutionDropdown.ClearOptions();
-        List<string> options = new List<string>();
-        int currentResIndex = 0;
-
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            string option = resolutions[i].width + "x" + resolutions[i].height;
-            options.Add(option);
-
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
-            {
-                currentResIndex = i;
-            }
-        }
-
-        resolutionDropdown.AddOptions(options);
-
-        int savedIndex = PlayerPrefs.GetInt("ResolutionIndex", currentResIndex);
-        resolutionDropdown.value = savedIndex;
-        resolutionDropdown.RefreshShownValue();
-        SetResolution(savedIndex);
-
-        resolutionDropdown.onValueChanged.AddListener(SetResolution);
-    }
-
-    /// <summary>
-    /// Apply the chosen resolution
-    /// </summary>
-    /// <param name="index"></param>
-    void SetResolution(int index)
-    {
-        Resolution res = resolutions[index];
-        Screen.SetResolution(res.width, res.height, Screen.fullScreen);
-        PlayerPrefs.SetInt("ResolutionIndex", index);
     }
 
     /// <summary>

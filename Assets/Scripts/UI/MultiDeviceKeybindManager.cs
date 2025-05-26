@@ -6,6 +6,8 @@ public class MultiDeviceKeybindManager : MonoBehaviour
 {
     public TextMeshProUGUI mouseText, keyboardText, gamepadText;
 
+    private static MultiDeviceKeybindManager _instance;
+
     private PlayerInput playerInput;
     private InputAction action;
 
@@ -23,10 +25,20 @@ public class MultiDeviceKeybindManager : MonoBehaviour
         LoadBindings();
     }
 
+    public static MultiDeviceKeybindManager GetInstance()
+    {
+        if (_instance == null)
+        {
+            _instance = new MultiDeviceKeybindManager();
+        }
+
+        return _instance;
+    }
+
     /// <summary>
     /// 
     /// </summary>
-    void LoadBindings()
+    public void LoadBindings()
     {
         for (int i = 0; i < action.bindings.Count; i++)
         {
