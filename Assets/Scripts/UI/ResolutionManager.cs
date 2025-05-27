@@ -5,7 +5,6 @@ using System.Collections;
 
 public class ResolutionManager : MonoBehaviour
 {
-    private const int COUNTDOWN_DURATION_MAX = 15;
 
     [Header("Visual settings")]
     public TMP_Dropdown resolutionDropdown;
@@ -14,15 +13,31 @@ public class ResolutionManager : MonoBehaviour
     public GameObject popupUI;
     public TMP_Text countdownText;
 
-    private Resolution[] resolutions;
+    public static ResolutionManager Instance { get; private set; }
+
+    private const int COUNTDOWN_DURATION_MAX = 15;
     private int currentIndexResolution;
+    private int _defaultResolutionIndexValue = 0;
     private Coroutine countdownCoroutine;
+    private Resolution[] _resolutions;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
+        SetInstance();
         SetupResolutions();
         popupUI.SetActive(false);
+    }
+
+    private void SetInstance()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
     }
 
     /// <summary>
@@ -30,31 +45,33 @@ public class ResolutionManager : MonoBehaviour
     /// </summary>
     void SetupResolutions()
     {
-        resolutions = Screen.resolutions;
+        _resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
-        int currentResIndex = 0;
 
-        for (int i = 0; i < resolutions.Length; i++)
+        for (int i = 0; i < _resolutions.Length; i++)
         {
-            string option = resolutions[i].width + "x" + resolutions[i].height;
+            string option = _resolutions[i].width + "x" + _resolutions[i].height;
             options.Add(option);
 
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
+            if (_resolutions[i].width == Screen.currentResolution.width &&
+                _resolutions[i].height == Screen.currentResolution.height)
             {
-                currentResIndex = i;
+                _defaultResolutionIndexValue = i;
             }
         }
 
         resolutionDropdown.AddOptions(options);
 
-        currentIndexResolution = PlayerPrefs.GetInt("ResolutionIndex", currentResIndex);
+        Debug.Log($"liste : {resolutionDropdown.options.Count}");
+
+        currentIndexResolution = PlayerPrefs.GetInt("ResolutionIndex", _defaultResolutionIndexValue);
         resolutionDropdown.value = currentIndexResolution;
         resolutionDropdown.RefreshShownValue();
         SetResolution(currentIndexResolution);
 
-        resolutionDropdown.onValueChanged.AddListener(delegate(int index) {
+        resolutionDropdown.onValueChanged.AddListener(delegate (int index)
+        {
             if (index == currentIndexResolution)
             {
                 return;
@@ -70,10 +87,11 @@ public class ResolutionManager : MonoBehaviour
     /// <param name="index"></param>
     void SetResolution(int index, bool isTimerNeeded = false)
     {
-        Resolution res = resolutions[index];
+        Resolution res = _resolutions[index];
 
         if (Screen.currentResolution.Equals(res))
         {
+            Debug.Log(_defaultResolutionIndexValue);
             return;
         }
 
@@ -126,4 +144,12 @@ public class ResolutionManager : MonoBehaviour
         resolutionDropdown.value = currentIndexResolution;
         resolutionDropdown.RefreshShownValue();
     }
+
+    public void RestoreDefaultResolution()
+    {
+        SetResolution(_defaultResolutionIndexValue, false);
+        PlayerPrefs.SetInt("ResolutionIndex", _defaultResolutionIndexValue);
+        resolutionDropdown.SetValueWithoutNotify(currentIndexResolution);
+        resolutionDropdown.RefreshShownValue();
+    } 
 }
