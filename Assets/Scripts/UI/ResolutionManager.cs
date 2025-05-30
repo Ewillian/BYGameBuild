@@ -25,6 +25,10 @@ public class ResolutionManager : MonoBehaviour
     void Awake()
     {
         SetInstance();
+    }
+
+    void Start()
+    {
         SetupResolutions();
         popupUI.SetActive(false);
     }

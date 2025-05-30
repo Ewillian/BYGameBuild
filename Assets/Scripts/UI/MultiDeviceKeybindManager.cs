@@ -4,19 +4,45 @@ using UnityEngine.InputSystem;
 
 public class MultiDeviceKeybindManager : MonoBehaviour
 {
-    public TextMeshProUGUI mouseText, keyboardText, gamepadText;
+    #region Public variables
 
+    /// <summary>
+    /// Singleton instance of the <see cref="MultiDeviceKeybindManager"/>.
+    /// </summary>
     public static MultiDeviceKeybindManager Instance { get; private set; }
 
+    /// <summary>
+    /// Defines the Unity TMP text for the mouse, keyboard and gamepad buttons
+    /// </summary>
+    public TextMeshProUGUI mouseText, keyboardText, gamepadText;
+
+    #endregion Public variables
+
+    #region Private variables
+
+    /// <summary>
+    /// Defines the unity player input containing the input action keybinds
+    /// </summary>
     private PlayerInput playerInput;
+
+    /// <summary>
+    /// Defines the unity player input action for PrincipalAction
+    /// </summary>
     private InputAction action;
 
+    #endregion Private variables
 
+    /// <summary>
+    /// Default awake unity method
+    /// </summary>
     void Awake()
     {
         SetInstance();
     }
 
+    /// <summary>
+    /// Default start unity method
+    /// </summary>
     void Start()
     {
         playerInput = InputManager.instance.GetComponent<PlayerInput>();
@@ -30,6 +56,9 @@ public class MultiDeviceKeybindManager : MonoBehaviour
         LoadBindings();
     }
 
+    /// <summary>
+    /// Sets the singleton instance for <see cref="MultiDeviceKeybindManager"/>
+    /// </summary>
     private void SetInstance()
     {
         if (Instance != null && Instance != this)
@@ -42,8 +71,9 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Loads the player keybinds or default and apply the modify buttons the correct text
     /// </summary>
+    /// <param name="isPlayerPrefToLoad">True, loads player bindings. False load default bindings</param>
     public void LoadBindings(bool isPlayerPrefToLoad = true)
     {
         for (int i = 0; i < action.bindings.Count; i++)
@@ -62,7 +92,7 @@ public class MultiDeviceKeybindManager : MonoBehaviour
                 deviceKey = "Gamepad";
 
             if (isPlayerPrefToLoad) {
-                string savedPath = PlayerPrefs.GetString($"PrincipalAction_{deviceKey}", "");
+                string savedPath = PlayerPrefs.GetString($"PrincipalAction_{deviceKey}", binding.path);
 
                 if (!string.IsNullOrEmpty(savedPath))
                 {
@@ -83,10 +113,10 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Rebind keys for the selected device
     /// </summary>
-    /// <param name="deviceKey"></param>
-    public void StartRebind(string deviceKey)
+    /// <param name="deviceKey">The device key</param>
+    public void RebindKeys(string deviceKey)
     {
         int bindingIndex = FindBindingIndex(deviceKey);
 
@@ -128,7 +158,7 @@ public class MultiDeviceKeybindManager : MonoBehaviour
                 Debug.Log(selectedControl.path);
 
                 action.ApplyBindingOverride(bindingIndex, selectedControl.path);
-                PlayerPrefs.SetString($"{action.name}_binding_{bindingIndex}", selectedControl.path);
+                PlayerPrefs.SetString($"PrincipalAction_{deviceKey}", selectedControl.path);
                 PlayerPrefs.Save();
 
                 uiText.SetText(GetDisplayName(bindingIndex));
@@ -145,12 +175,11 @@ public class MultiDeviceKeybindManager : MonoBehaviour
         rebindOperation.Start();
     }
 
-
     /// <summary>
-    /// 
+    /// Returns the bindings index for the selected device
     /// </summary>
-    /// <param name="deviceKey"></param>
-    /// <returns></returns>
+    /// <param name="deviceKey">The device key</param>
+    /// <returns>The bindings index</returns>
     int FindBindingIndex(string deviceKey)
     {
         for (int i = 0; i < action.bindings.Count; i++)
@@ -166,10 +195,10 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Returns the human readable bind key name
     /// </summary>
-    /// <param name="bindingIndex"></param>
-    /// <returns></returns>
+    /// <param name="bindingIndex">The binding index</param>
+    /// <returns>The display name</returns>
     string GetDisplayName(int bindingIndex)
     {
         return InputControlPath.ToHumanReadableString(
@@ -205,5 +234,6 @@ public class MultiDeviceKeybindManager : MonoBehaviour
         action.RemoveAllBindingOverrides();
         action.Enable();
         LoadBindings(false);
+        //TODO save
     }
 }

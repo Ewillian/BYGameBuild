@@ -90,13 +90,13 @@ public class ButtonSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         StartCoroutine(MoveButton(true));
 
-        ButtonSelectionManager.instance.lastSelectedButton = gameObject;
+        ButtonSelectionManager.Instance.lastSelectedButton = gameObject;
 
-        for (int i = 0; i < ButtonSelectionManager.instance.buttons.Length; i++)
+        for (int i = 0; i < ButtonSelectionManager.Instance.buttons.Length; i++)
         {
-            if (ButtonSelectionManager.instance.buttons[i] == gameObject)
+            if (ButtonSelectionManager.Instance.buttons[i] == gameObject)
             {
-                ButtonSelectionManager.instance.lastSelectedButtonIndex = i;
+                ButtonSelectionManager.Instance.lastSelectedButtonIndex = i;
                 break;
             }
         }
