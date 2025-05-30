@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     {
         _events = EventManager.GetInstance();
         _difficulty = DifficultyManager.GetInstance();
-        _difficulty.SetDifficulty(DifficultyType.Easy);
+        _difficulty.SetDifficulty(DifficultyType.Hard);
         _playerControler = transform.parent.GetComponentInChildren<PlayerManager>();
         _currentMandoState = MandoState.Idle;
 
@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
     private void InitBeforeMando()
     {
         _mando = true;
-        _triggerBeforeTimer = UnityEngine.Random.Range(5, 25);
+        _triggerBeforeTimer = UnityEngine.Random.Range(_difficulty.GetDifficultyStats().TRIGGER_BEFORE_TIMER_MIN, _difficulty.GetDifficultyStats().TRIGGER_BEFORE_TIMER_MAX);
 
         _currentMandoState = MandoState.Prepare;
     }
