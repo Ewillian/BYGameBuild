@@ -21,6 +21,7 @@ public class SettingsManager : MonoBehaviour
     public AudioMixer audioMixer;
 
     private ResolutionManager _resolutionManager;
+    private MultiDeviceKeybindManager _multiDeviceKeybindManager;
     private const float DEFAULT_VOLUME_VALUE = 0.5f;
 
     /// <summary>
@@ -35,6 +36,7 @@ public class SettingsManager : MonoBehaviour
     void Start()
     {
         _resolutionManager = ResolutionManager.Instance;
+        _multiDeviceKeybindManager = MultiDeviceKeybindManager.Instance;
     }
 
     /// <summary>

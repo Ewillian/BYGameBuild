@@ -6,14 +6,15 @@ public class MultiDeviceKeybindManager : MonoBehaviour
 {
     public TextMeshProUGUI mouseText, keyboardText, gamepadText;
 
-    private static MultiDeviceKeybindManager _instance;
+    public static MultiDeviceKeybindManager Instance { get; private set; }
 
     private PlayerInput playerInput;
     private InputAction action;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
+        SetInstance();
+
         playerInput = InputManager.instance.GetComponent<PlayerInput>();
         if(playerInput == null)
         {
@@ -25,14 +26,15 @@ public class MultiDeviceKeybindManager : MonoBehaviour
         LoadBindings();
     }
 
-    public static MultiDeviceKeybindManager GetInstance()
+    private void SetInstance()
     {
-        if (_instance == null)
+        if (Instance != null && Instance != this)
         {
-            _instance = new MultiDeviceKeybindManager();
+            Destroy(gameObject);
+            return;
         }
 
-        return _instance;
+        Instance = this;
     }
 
     /// <summary>
@@ -188,14 +190,5 @@ public class MultiDeviceKeybindManager : MonoBehaviour
             return true;
 
         return false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //  foreach (var bindings in action.bindings)
-        //  {
-        //      Debug.Log(bindings.ToDisplayString());
-        //  }
     }
 }
