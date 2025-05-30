@@ -24,19 +24,13 @@ public class SettingsManager : MonoBehaviour
     private MultiDeviceKeybindManager _multiDeviceKeybindManager;
     private const float DEFAULT_VOLUME_VALUE = 0.5f;
 
-    /// <summary>
-    /// Setups the different settings ui elements
-    /// </summary>
-    void Awake()
-    {
-        SetupVolumes();
-        SetupLanguage();
-    }
-
     void Start()
     {
         _resolutionManager = ResolutionManager.Instance;
         _multiDeviceKeybindManager = MultiDeviceKeybindManager.Instance;
+
+        SetupVolumes();
+        SetupLanguage();
     }
 
     /// <summary>
@@ -89,7 +83,7 @@ public class SettingsManager : MonoBehaviour
         }
 
         string volumeTextValue = Mathf.Round(volumeValue * 100).ToString();
-        audioMixer.SetFloat(volume.ToString(), Mathf.Log10(Mathf.Clamp(volumeValue, 0.001f, 1f)) * 20);
+        audioMixer.SetFloat(volume.ToString(), Mathf.Log10(Mathf.Clamp(volumeValue, 0.001f, 1f)) * 20).ToString();
         PlayerPrefs.SetFloat(volume.ToString(), volumeValue);
 
         switch (volume)
