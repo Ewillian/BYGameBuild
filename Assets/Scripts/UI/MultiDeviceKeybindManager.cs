@@ -11,12 +11,16 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction action;
 
+
     void Awake()
     {
         SetInstance();
+    }
 
+    void Start()
+    {
         playerInput = InputManager.instance.GetComponent<PlayerInput>();
-        if(playerInput == null)
+        if (playerInput == null)
         {
             Debug.LogError("PlayerInput not found");
             return;
@@ -40,7 +44,7 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public void LoadBindings()
+    public void LoadBindings(bool isPlayerPrefToLoad = true)
     {
         for (int i = 0; i < action.bindings.Count; i++)
         {
@@ -57,11 +61,13 @@ public class MultiDeviceKeybindManager : MonoBehaviour
             else if (binding.path.Contains("Gamepad"))
                 deviceKey = "Gamepad";
 
-            string savedPath = PlayerPrefs.GetString($"PrincipalAction_{deviceKey}", "");
+            if (isPlayerPrefToLoad) {
+                string savedPath = PlayerPrefs.GetString($"PrincipalAction_{deviceKey}", "");
 
-            if (!string.IsNullOrEmpty(savedPath))
-            {
-                action.ApplyBindingOverride(i, savedPath);
+                if (!string.IsNullOrEmpty(savedPath))
+                {
+                    action.ApplyBindingOverride(i, savedPath);
+                }
             }
 
             switch (deviceKey)
@@ -105,7 +111,8 @@ public class MultiDeviceKeybindManager : MonoBehaviour
         var rebindOperation = action.PerformInteractiveRebinding(bindingIndex)
             .WithCancelingThrough("<Keyboard>/escape")
             .OnMatchWaitForAnother(0.1f)
-            .OnPotentialMatch(operation =>{
+            .OnPotentialMatch(operation =>
+            {
                 var actualDevice = operation.selectedControl.device;
                 if (!IsAllowedDevice(actualDevice, deviceKey))
                 {
@@ -123,7 +130,7 @@ public class MultiDeviceKeybindManager : MonoBehaviour
                 action.ApplyBindingOverride(bindingIndex, selectedControl.path);
                 PlayerPrefs.SetString($"{action.name}_binding_{bindingIndex}", selectedControl.path);
                 PlayerPrefs.Save();
-                
+
                 uiText.SetText(GetDisplayName(bindingIndex));
                 operation.Dispose();
                 action.Enable();
@@ -190,5 +197,13 @@ public class MultiDeviceKeybindManager : MonoBehaviour
             return true;
 
         return false;
+    }
+
+    public void RestoreDefaultKeybinds()
+    {
+        action.Disable();
+        action.RemoveAllBindingOverrides();
+        action.Enable();
+        LoadBindings(false);
     }
 }

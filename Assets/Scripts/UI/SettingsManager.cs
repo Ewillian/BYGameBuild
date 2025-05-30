@@ -151,5 +151,6 @@ public class SettingsManager : MonoBehaviour
         sfxSlider.SetValueWithoutNotify(DEFAULT_VOLUME_VALUE);
 
         _resolutionManager.RestoreDefaultResolution();
+        _multiDeviceKeybindManager.RestoreDefaultKeybinds();
     }
 }

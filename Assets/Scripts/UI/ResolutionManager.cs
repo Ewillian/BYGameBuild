@@ -63,8 +63,6 @@ public class ResolutionManager : MonoBehaviour
 
         resolutionDropdown.AddOptions(options);
 
-        Debug.Log($"liste : {resolutionDropdown.options.Count}");
-
         currentIndexResolution = PlayerPrefs.GetInt("ResolutionIndex", _defaultResolutionIndexValue);
         resolutionDropdown.value = currentIndexResolution;
         resolutionDropdown.RefreshShownValue();
@@ -91,7 +89,6 @@ public class ResolutionManager : MonoBehaviour
 
         if (Screen.currentResolution.Equals(res))
         {
-            Debug.Log(_defaultResolutionIndexValue);
             return;
         }
 
