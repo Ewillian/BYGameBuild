@@ -14,7 +14,7 @@ public class MandoUI : MonoBehaviour , IEventListener
 
     private void Start()
     {
-        _events.Subscribe(EventType.Mando, this);
+        _events.Subscribe(EventEnum.Mando, this);
     }
 
     void Update()
