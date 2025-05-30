@@ -146,5 +146,7 @@ public class SettingsManager : MonoBehaviour
 
         _resolutionManager.RestoreDefaultResolution();
         _multiDeviceKeybindManager.RestoreDefaultKeybinds();
+
+        PlayerPrefs.Save();
     }
 }

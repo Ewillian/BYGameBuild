@@ -155,8 +155,6 @@ public class MultiDeviceKeybindManager : MonoBehaviour
             {
                 var selectedControl = operation.selectedControl;
 
-                Debug.Log(selectedControl.path);
-
                 action.ApplyBindingOverride(bindingIndex, selectedControl.path);
                 PlayerPrefs.SetString($"PrincipalAction_{deviceKey}", selectedControl.path);
                 PlayerPrefs.Save();
@@ -180,7 +178,7 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     /// </summary>
     /// <param name="deviceKey">The device key</param>
     /// <returns>The bindings index</returns>
-    int FindBindingIndex(string deviceKey)
+    private int FindBindingIndex(string deviceKey)
     {
         for (int i = 0; i < action.bindings.Count; i++)
         {
@@ -211,6 +209,25 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="binding"></param>
+    /// <returns></returns>
+    private string GetDeviceKey(InputBinding binding)
+    {
+        string deviceKey = "";
+
+        if (binding.path.Contains("Mouse"))
+            deviceKey = "Mouse";
+        else if (binding.path.Contains("Keyboard"))
+            deviceKey = "Keyboard";
+        else if (binding.path.Contains("Gamepad"))
+            deviceKey = "Gamepad";
+
+        return deviceKey;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="device"></param>
     /// <param name="deviceKey"></param>
     /// <returns></returns>
@@ -234,6 +251,11 @@ public class MultiDeviceKeybindManager : MonoBehaviour
         action.RemoveAllBindingOverrides();
         action.Enable();
         LoadBindings(false);
-        //TODO save
+        
+        for (int i = 0; i < action.bindings.Count; i++)
+        {
+            string deviceKey = GetDeviceKey(action.bindings[i]);
+            PlayerPrefs.SetString($"PrincipalAction_{deviceKey}", action.bindings[i].path);
+        }
     }
 }
