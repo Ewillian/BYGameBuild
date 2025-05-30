@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
-using System;
 
 public class PlayerManager : MonoBehaviour
 {

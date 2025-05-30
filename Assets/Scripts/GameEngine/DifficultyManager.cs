@@ -1,31 +1,41 @@
 using System.Collections.Generic;
-using System.Data;
-
-public enum DifficultyType
-{
-    Easy,
-    Normal,
-    Hard
-}
-
-public class DifficultyStats
-{
-    public int GAME_DURATION_MAX;
-    public int GAIN_SCORE;
-    public int LOSE_SCORE;
-    public int TARGET_DURATION_MAX;
-    public int TRIGGER_DURING_TIMER_MAX;
-    public int RANGE;
-}
 
 public class DifficultyManager
 {
+    public class DifficultyStats
+    {
+        /// <summary>
+        /// Default value statistics depend difficulty
+        /// </summary>
+        /// <param name="pGAME_DURATION_MAX"></param>
+        /// <param name="pGAIN_SCORE"></param>
+        /// <param name="pLOSE_SCORE"></param>
+        /// <param name="pTARGET_DURATION_MAX"></param>
+        /// <param name="pTRIGGER_DURING_TIMER_MAX"></param>
+        /// <param name="pRANGE"></param>
+        public DifficultyStats(int pGAME_DURATION_MAX, int pGAIN_SCORE, int pLOSE_SCORE, int pTARGET_DURATION_MAX, int pTRIGGER_DURING_TIMER_MAX, int pRANGE)
+        {
+            GAME_DURATION_MAX = pGAME_DURATION_MAX;
+            GAIN_SCORE = pGAIN_SCORE;
+            LOSE_SCORE = pLOSE_SCORE;
+            TARGET_DURATION_MAX = pTARGET_DURATION_MAX;
+            TRIGGER_DURING_TIMER_MAX = pTRIGGER_DURING_TIMER_MAX;
+            RANGE = pRANGE;
+        }
+
+        public int GAME_DURATION_MAX { get; private set; }
+        public int GAIN_SCORE { get; private set; }
+        public int LOSE_SCORE { get; private set; }
+        public int TARGET_DURATION_MAX { get; private set; }
+        public int TRIGGER_DURING_TIMER_MAX { get; private set; }
+        public int RANGE { get; private set; }
+    }
+
     #region Static fields
 
     private static DifficultyManager _instance;
 
     #endregion Static Fields
-
 
     #region Private fields
 
@@ -41,32 +51,9 @@ public class DifficultyManager
     {
         _difficultyDictionary = new Dictionary<DifficultyType, DifficultyStats>();
 
-        DifficultyStats easyDifficulty = new DifficultyStats();
-        easyDifficulty.GAME_DURATION_MAX = 120;
-        easyDifficulty.GAIN_SCORE = 5;
-        easyDifficulty.LOSE_SCORE = 2;
-        easyDifficulty.TARGET_DURATION_MAX = 10;
-        easyDifficulty.TRIGGER_DURING_TIMER_MAX = 3;
-        easyDifficulty.RANGE = 13;
-        _difficultyDictionary.Add(DifficultyType.Easy, easyDifficulty);
-
-        DifficultyStats normalDifficulty = new DifficultyStats();
-        normalDifficulty.GAME_DURATION_MAX = 90;
-        normalDifficulty.GAIN_SCORE = 4;
-        normalDifficulty.LOSE_SCORE = 4;
-        normalDifficulty.TARGET_DURATION_MAX = 12;
-        normalDifficulty.TRIGGER_DURING_TIMER_MAX = 3;
-        normalDifficulty.RANGE = 10;
-        _difficultyDictionary.Add(DifficultyType.Normal, normalDifficulty);
-
-        DifficultyStats hardDifficulty = new DifficultyStats();
-        hardDifficulty.GAME_DURATION_MAX = 60;
-        hardDifficulty.GAIN_SCORE = 3;
-        hardDifficulty.LOSE_SCORE = 5;
-        hardDifficulty.TARGET_DURATION_MAX = 15;
-        hardDifficulty.TRIGGER_DURING_TIMER_MAX = 4;
-        hardDifficulty.RANGE = 7;
-        _difficultyDictionary.Add(DifficultyType.Hard, hardDifficulty);
+        _difficultyDictionary.Add(DifficultyType.Easy, new DifficultyStats(120, 5, 2, 10, 3, 13));
+        _difficultyDictionary.Add(DifficultyType.Normal, new DifficultyStats(90, 4, 4, 12, 3, 10));
+        _difficultyDictionary.Add(DifficultyType.Hard, new DifficultyStats(60, 3, 5, 15, 4, 7));
     }
 
     #endregion Private methods

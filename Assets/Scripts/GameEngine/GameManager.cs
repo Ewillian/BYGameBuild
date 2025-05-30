@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     {
         _events = EventManager.GetInstance();
         _difficulty = DifficultyManager.GetInstance();
-        _difficulty.SetDifficulty(DifficultyType.Normal);
+        _difficulty.SetDifficulty(DifficultyType.Easy);
         _playerControler = transform.parent.GetComponentInChildren<PlayerManager>();
         _currentMandoState = MandoState.Idle;
 
@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
         UpdateTarget();
         UpdateGameDuration();
 
-        _events.Notify(EventType.Mando, (int) _currentMandoState);
+        _events.Notify(EventEnum.Mando, (int) _currentMandoState);
 
         UpdateDebugUi();
     }

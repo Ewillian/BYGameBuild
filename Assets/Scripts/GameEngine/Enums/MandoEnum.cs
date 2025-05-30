@@ -5,8 +5,3 @@ public enum MandoState
     Check = 2,
     Found = 3
 }
-
-public enum EventType
-{
-    Mando = 0
-}
