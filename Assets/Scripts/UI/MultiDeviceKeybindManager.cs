@@ -16,9 +16,18 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     /// </summary>
     public TextMeshProUGUI mouseText, keyboardText, gamepadText;
 
+    [Header("Alert pop up")]
+    public GameObject popupUI;
+    public TMP_Text countdownText;
+    public TMP_Text messageText;
+    public GameObject ButtonsContainer;
+
     #endregion Public variables
 
     #region Private variables
+
+    private const string DEFAULT_MESSAGE_VALUE = "Press key for";
+    private const string WRONG_KEY_MESSAGE_VALUE = "The used key is not on the correct device";
 
     /// <summary>
     /// Defines the unity player input containing the input action keybinds
@@ -91,7 +100,8 @@ public class MultiDeviceKeybindManager : MonoBehaviour
             else if (binding.path.Contains("Gamepad"))
                 deviceKey = "Gamepad";
 
-            if (isPlayerPrefToLoad) {
+            if (isPlayerPrefToLoad)
+            {
                 string savedPath = PlayerPrefs.GetString($"PrincipalAction_{deviceKey}", binding.path);
 
                 if (!string.IsNullOrEmpty(savedPath))
@@ -135,6 +145,7 @@ public class MultiDeviceKeybindManager : MonoBehaviour
 
         uiText.text = "Press key...";
         //TODO: change to pop up waiting for confirmation
+        HandlePopUp(true, $"Press Esc to cancel\n", $"{DEFAULT_MESSAGE_VALUE} {deviceKey}");
 
         action.Disable();
 
@@ -148,7 +159,9 @@ public class MultiDeviceKeybindManager : MonoBehaviour
                 {
                     Debug.LogWarning($"Device type mismatch. Expected: {deviceKey}, but got: {actualDevice.name}");
                     //TODO pop up alert
-                    operation.Cancel();
+                    operation.Dispose();
+                    RebindKeys(deviceKey);
+                    return;
                 }
             })
             .OnComplete(operation =>
@@ -161,16 +174,35 @@ public class MultiDeviceKeybindManager : MonoBehaviour
 
                 uiText.SetText(GetDisplayName(bindingIndex));
                 operation.Dispose();
+                HandlePopUp(false);
                 action.Enable();
             })
             .OnCancel(operation =>
             {
                 uiText.SetText(GetDisplayName(bindingIndex));
+                HandlePopUp(false);
                 operation.Dispose();
                 action.Enable();
             });
 
         rebindOperation.Start();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void RestoreDefaultKeybinds()
+    {
+        action.Disable();
+        action.RemoveAllBindingOverrides();
+        action.Enable();
+        LoadBindings(false);
+
+        for (int i = 0; i < action.bindings.Count; i++)
+        {
+            string deviceKey = GetDeviceKey(action.bindings[i]);
+            PlayerPrefs.SetString($"PrincipalAction_{deviceKey}", action.bindings[i].path);
+        }
     }
 
     /// <summary>
@@ -197,7 +229,7 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     /// </summary>
     /// <param name="bindingIndex">The binding index</param>
     /// <returns>The display name</returns>
-    string GetDisplayName(int bindingIndex)
+    private string GetDisplayName(int bindingIndex)
     {
         return InputControlPath.ToHumanReadableString(
             action.GetBindingDisplayString(bindingIndex),
@@ -231,7 +263,7 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     /// <param name="device"></param>
     /// <param name="deviceKey"></param>
     /// <returns></returns>
-    bool IsAllowedDevice(InputDevice device, string deviceKey)
+    private bool IsAllowedDevice(InputDevice device, string deviceKey)
     {
         if (device is Keyboard && deviceKey == "Keyboard")
             return true;
@@ -245,17 +277,17 @@ public class MultiDeviceKeybindManager : MonoBehaviour
         return false;
     }
 
-    public void RestoreDefaultKeybinds()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="isToBeDisplayed"></param>
+    /// <param name="message"></param>
+    /// <param name="countdownMessage"></param>
+    private void HandlePopUp(bool isToBeDisplayed, string message = "", string countdownMessage = "")
     {
-        action.Disable();
-        action.RemoveAllBindingOverrides();
-        action.Enable();
-        LoadBindings(false);
-        
-        for (int i = 0; i < action.bindings.Count; i++)
-        {
-            string deviceKey = GetDeviceKey(action.bindings[i]);
-            PlayerPrefs.SetString($"PrincipalAction_{deviceKey}", action.bindings[i].path);
-        }
+        messageText.SetText(message);
+        countdownText.SetText(countdownMessage);
+        ButtonsContainer.SetActive(false);
+        popupUI.SetActive(isToBeDisplayed);
     }
 }

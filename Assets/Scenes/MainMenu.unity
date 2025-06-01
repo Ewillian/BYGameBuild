@@ -283,7 +283,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 371931101}
         m_TargetAssemblyTypeName: MultiDeviceKeybindManager, Assembly-CSharp
-        m_MethodName: StartRebind
+        m_MethodName: RebindKeys
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1330,6 +1330,10 @@ MonoBehaviour:
   mouseText: {fileID: 2069944097}
   keyboardText: {fileID: 1523619825}
   gamepadText: {fileID: 1008430533}
+  popupUI: {fileID: 483107133}
+  countdownText: {fileID: 2039666040}
+  messageText: {fileID: 1040618412}
+  ButtonsContainer: {fileID: 11454127}
 --- !u!114 &371931102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1345,6 +1349,7 @@ MonoBehaviour:
   resolutionDropdown: {fileID: 7597998629180803303}
   popupUI: {fileID: 483107133}
   countdownText: {fileID: 2039666040}
+  messageText: {fileID: 1040618412}
 --- !u!1 &388412529
 GameObject:
   m_ObjectHideFlags: 0
@@ -4179,7 +4184,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 500, y: -167.48}
-  m_SizeDelta: {x: 735.9099, y: 50}
+  m_SizeDelta: {x: 735.91, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1040618412
 MonoBehaviour:
@@ -6715,7 +6720,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 371931101}
         m_TargetAssemblyTypeName: MultiDeviceKeybindManager, Assembly-CSharp
-        m_MethodName: StartRebind
+        m_MethodName: RebindKeys
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7710,7 +7715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7678984920250830397, guid: 5fdb9f6e73c9abc40a725c133f29e064, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartRebind
+      value: RebindKeys
       objectReference: {fileID: 0}
     - target: {fileID: 7678984920250830397, guid: 5fdb9f6e73c9abc40a725c133f29e064, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

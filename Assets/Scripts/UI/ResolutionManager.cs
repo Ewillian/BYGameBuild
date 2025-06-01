@@ -12,6 +12,7 @@ public class ResolutionManager : MonoBehaviour
     [Header("Alert pop up")]
     public GameObject popupUI;
     public TMP_Text countdownText;
+    public TMP_Text messageText;
 
     public static ResolutionManager Instance { get; private set; }
 
