@@ -1,6 +1,9 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class MultiDeviceKeybindManager : MonoBehaviour
 {
@@ -21,6 +24,8 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     public TMP_Text countdownText;
     public TMP_Text messageText;
     public GameObject ButtonsContainer;
+
+    public GameObject SettingsButtonsContainer;
 
     #endregion Public variables
 
@@ -54,6 +59,8 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     /// </summary>
     void Start()
     {
+        SetOnClicks();
+
         playerInput = InputManager.instance.GetComponent<PlayerInput>();
         if (playerInput == null)
         {
@@ -123,10 +130,36 @@ public class MultiDeviceKeybindManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    private void SetOnClicks()
+    {
+        var SettingsButtons = SettingsButtonsContainer.GetComponentsInChildren<UnityEngine.UI.Button>();
+        foreach (var button in SettingsButtons)
+        {
+            switch (button.name)
+            {
+                case "ButtonMouseKeybinds":
+                    button.onClick.AddListener(() => RebindKeys("Mouse"));
+                    break;
+                case "ButtonKeyboardKeybinds":
+                    button.onClick.AddListener(() => RebindKeys("Keyboard"));
+                    break;
+                case "ButtonGamepadKeybinds":
+                    button.onClick.AddListener(() => RebindKeys("Gamepad"));
+                    break;
+                default:
+                    Debug.LogWarning($"Button device type mismatch. The device is ont handled.{button.name}");
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
     /// Rebind keys for the selected device
     /// </summary>
     /// <param name="deviceKey">The device key</param>
-    public void RebindKeys(string deviceKey)
+    public void RebindKeys(string deviceKey, string errorMessage = "")
     {
         int bindingIndex = FindBindingIndex(deviceKey);
 
@@ -145,7 +178,7 @@ public class MultiDeviceKeybindManager : MonoBehaviour
 
         uiText.text = "Press key...";
         //TODO: change to pop up waiting for confirmation
-        HandlePopUp(true, $"Press Esc to cancel\n", $"{DEFAULT_MESSAGE_VALUE} {deviceKey}");
+        HandlePopUp(true, $"Press Esc to cancel\n{errorMessage}", $"{DEFAULT_MESSAGE_VALUE} {deviceKey}");
 
         action.Disable();
 
@@ -160,7 +193,7 @@ public class MultiDeviceKeybindManager : MonoBehaviour
                     Debug.LogWarning($"Device type mismatch. Expected: {deviceKey}, but got: {actualDevice.name}");
                     //TODO pop up alert
                     operation.Dispose();
-                    RebindKeys(deviceKey);
+                    RebindKeys(deviceKey, $"{WRONG_KEY_MESSAGE_VALUE} ({deviceKey})");
                     return;
                 }
             })

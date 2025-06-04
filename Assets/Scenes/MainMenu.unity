@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 20129803}
   - component: {fileID: 20129802}
   m_Layer: 5
-  m_Name: ButtonControllerKeybinds
+  m_Name: ButtonGamepadKeybinds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,19 +280,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 20129803}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 371931101}
-        m_TargetAssemblyTypeName: MultiDeviceKeybindManager, Assembly-CSharp
-        m_MethodName: RebindKeys
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Gamepad
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &20129803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1334,6 +1322,7 @@ MonoBehaviour:
   countdownText: {fileID: 2039666040}
   messageText: {fileID: 1040618412}
   ButtonsContainer: {fileID: 11454127}
+  SettingsButtonsContainer: {fileID: 1269639027}
 --- !u!114 &371931102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4972,6 +4961,11 @@ MonoBehaviour:
   _verticalMoveAmount: 1
   _moveTime: 0.1
   _scaleFactor: 1.2
+--- !u!1 &1269639027 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6362728982425322529, guid: 5fdb9f6e73c9abc40a725c133f29e064, type: 3}
+  m_PrefabInstance: {fileID: 511797660736201948}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1274385666 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6930501141099758664, guid: c4bb867fa1889cb489891f4cb9fc56d8, type: 3}
@@ -6717,19 +6711,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1968058751}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 371931101}
-        m_TargetAssemblyTypeName: MultiDeviceKeybindManager, Assembly-CSharp
-        m_MethodName: RebindKeys
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Keyboard
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1968058751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7699,7 +7681,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7678984920250830397, guid: 5fdb9f6e73c9abc40a725c133f29e064, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7678984920250830397, guid: 5fdb9f6e73c9abc40a725c133f29e064, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
