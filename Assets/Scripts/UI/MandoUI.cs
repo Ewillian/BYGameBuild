@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MandoUI : MonoBehaviour , IEventListener
+public class MandoUI : MonoBehaviour, IEventListener
 {
     private EventManager _events;
     [SerializeField] private List<GameObject> _mandoVisuals;
@@ -22,9 +22,12 @@ public class MandoUI : MonoBehaviour , IEventListener
         
     }
 
-    public void EventUpdate(int data)
+    public void EventUpdate(EventEnum eventEnum, int data)
     {
-        setVisual(data);
+        if (eventEnum == EventEnum.Mando)
+        {
+            setVisual(data);
+        }
     }
 
     public void setVisual(int targetMando)

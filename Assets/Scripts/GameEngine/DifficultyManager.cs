@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public class DifficultyManager
 {
-    public class DifficultyStats
+    private class DifficultyStats
     {
         /// <summary>
         /// Default value statistics depend difficulty
@@ -45,9 +45,57 @@ public class DifficultyManager
 
     #region Private fields
 
-    private Dictionary<DifficultyType, DifficultyStats> _difficultyDictionary;
+    private Dictionary<DifficultyEnum, DifficultyStats> _difficultyDictionary;
 
-    private DifficultyType _currentDifficulty = DifficultyType.Easy;
+    private DifficultyEnum _currentDifficulty = DifficultyEnum.Easy;
+
+    public int GAME_DURATION_MAX
+    {
+        get { return _difficultyDictionary[_currentDifficulty].GAME_DURATION_MAX;}
+        private set {}
+    }
+
+    public int GAIN_SCORE
+    {
+        get { return _difficultyDictionary[_currentDifficulty].GAIN_SCORE;}
+        private set {}
+    }
+
+    public int LOSE_SCORE
+    {
+        get { return _difficultyDictionary[_currentDifficulty].LOSE_SCORE;}
+        private set {}
+    }
+
+    public int TARGET_DURATION_MAX
+    {
+        get { return _difficultyDictionary[_currentDifficulty].TARGET_DURATION_MAX;}
+        private set {}
+    }
+
+    public int TRIGGER_BEFORE_TIMER_MIN
+    {
+        get { return _difficultyDictionary[_currentDifficulty].TRIGGER_BEFORE_TIMER_MIN;}
+        private set {}
+    }
+
+    public int TRIGGER_BEFORE_TIMER_MAX
+    {
+        get { return _difficultyDictionary[_currentDifficulty].TRIGGER_BEFORE_TIMER_MAX;}
+        private set {}
+    }
+
+    public int TRIGGER_DURING_TIMER_MAX
+    {
+        get { return _difficultyDictionary[_currentDifficulty].TRIGGER_DURING_TIMER_MAX;}
+        private set {}
+    }
+
+    public int RANGE
+    {
+        get { return _difficultyDictionary[_currentDifficulty].RANGE;}
+        private set {}
+    }
 
     #endregion Private fields
 
@@ -55,11 +103,11 @@ public class DifficultyManager
 
     private DifficultyManager()
     {
-        _difficultyDictionary = new Dictionary<DifficultyType, DifficultyStats>();
+        _difficultyDictionary = new Dictionary<DifficultyEnum, DifficultyStats>();
 
-        _difficultyDictionary.Add(DifficultyType.Easy, new DifficultyStats(120, 5, 2, 10, 5, 25, 3, 13));
-        _difficultyDictionary.Add(DifficultyType.Normal, new DifficultyStats(90, 4, 4, 12, 3, 25, 3, 10));
-        _difficultyDictionary.Add(DifficultyType.Hard, new DifficultyStats(60, 3, 5, 15, 2, 20, 4, 7));
+        _difficultyDictionary.Add(DifficultyEnum.Easy, new DifficultyStats(120, 5, 2, 10, 5, 25, 3, 13));
+        _difficultyDictionary.Add(DifficultyEnum.Normal, new DifficultyStats(90, 4, 4, 12, 3, 25, 3, 10));
+        _difficultyDictionary.Add(DifficultyEnum.Hard, new DifficultyStats(60, 3, 5, 15, 2, 20, 4, 7));
     }
 
     #endregion Private methods
@@ -80,12 +128,12 @@ public class DifficultyManager
 
     #region Public methods
 
-    public DifficultyType GetDifficulty()
+    public DifficultyEnum GetDifficulty()
     {
         return _currentDifficulty;
     }
 
-    public void SetDifficulty(DifficultyType newDifficulty)
+    public void SetDifficulty(DifficultyEnum newDifficulty)
     {
         if (_currentDifficulty == newDifficulty)
         {
@@ -93,11 +141,6 @@ public class DifficultyManager
         }
 
         _currentDifficulty = newDifficulty;
-    }
-
-    public DifficultyStats GetDifficultyStats()
-    {
-        return _difficultyDictionary[_currentDifficulty];
     }
 
     #endregion Public methods
