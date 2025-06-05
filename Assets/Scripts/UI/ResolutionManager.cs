@@ -52,17 +52,21 @@ public class ResolutionManager : MonoBehaviour
     {
         _resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
-        List<string> options = new List<string>();
+        List<string> options = new();
 
         for (int i = 0; i < _resolutions.Length; i++)
         {
-            string option = _resolutions[i].width + "x" + _resolutions[i].height;
-            options.Add(option);
+            string option = $"{_resolutions[i].width}x{_resolutions[i].height}";
 
-            if (_resolutions[i].width == Screen.currentResolution.width &&
-                _resolutions[i].height == Screen.currentResolution.height)
+            if (!options.Contains(option))
             {
-                _defaultResolutionIndexValue = i;
+                options.Add(option);
+
+                if (_resolutions[i].width == Screen.currentResolution.width &&
+                    _resolutions[i].height == Screen.currentResolution.height)
+                {
+                    _defaultResolutionIndexValue = i;
+                }
             }
         }
 
