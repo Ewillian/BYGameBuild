@@ -19,7 +19,7 @@ public class MenuInitiator : MonoBehaviour
         private IEnumerator InitiateMenu()
         {
             MainPanel.SetActive(true);
-            OptionPanel.SetActive(true);
+            OptionPanel.SetActive(false);
             ScorePanel.SetActive(false);
             LeavePanel.SetActive(false);
     
