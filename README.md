@@ -1,4 +1,5 @@
 # ByGameBuild - Game Design Document
+[French version of the GDD (to be written)]()
 
 ## Game Overview
 
@@ -43,22 +44,24 @@ A light-hearted arcade experience blending Star Wars fanservice with sneaky game
 
 #### Visual
 
-<u>Visual Style:</u>
+<u>**Visual Style:**</u>
 The game features a stylized 2D art style with clean lines and soft shading, evoking a playful yet slightly tense atmosphere. The visuals are cartoon-like, with exaggerated proportions and smooth animations to emphasize Grogu’s cuteness and expressiveness. Despite the simplified look, the art direction remains faithful to the Star Wars universe in its design language.
 We want for the player to see the world through grogu's eyes.
 
-<u>Color Palette:</u>
+<u>**Color Palette:**</u>
 Muted greys and browns dominate the Razor Crest's interior, reflecting its rugged, industrial feel. Grogu is highlighted with warmer, more saturated tones (green, beige, brown) to draw the player's eye. Important interactive elements — like the control panel ball — use bright accents (e.g., silver, blinking red/blue lights) to enhance visibility and focus.
 
-<u>Character Design:</u>
+<u>**Character Design:**</u>
 Grogu is presented in a chibi-inspired design, with large eyes and fluid, playful animations that highlight his curiosity.  
 Mando appears only in partial views — his legs, cape, or silhouette in the background — helping build tension and giving the player a sense of being watched.
 
-<u>UI/UX:</u>
+<u>**UI/UX:**</u>
 The objective is to have a diegetic interface — no external HUD or indicators. Feedback is conveyed through visual cues (Grogu’s facial expressions, light flashes, environmental shaking) and subtle audio hints. This reinforces immersion and maintains the first-person illusion from Grogu's perspective.
 For the moment, we use classic HUD to give player the needed informations.
 
 #### Audio
+
+TODO
 
 ### Characters
 
@@ -71,3 +74,64 @@ Baby yoda is a character from the Star Wars Disney+ original television series T
 Din Djarin is a stoic and disciplined bounty hunter who rarely removes his helmet and lives by the Mandalorian code. As Grogu’s reluctant guardian, he balances toughness with a quiet sense of protectiveness. In the game, he serves as a looming authority figure — ever-present, unpredictable, and the main obstacle to Grogu’s mischief.
 
 ## Gameplay
+
+The player can choose to use a mouse, keyboard, or gamepad to interact with the game and its UI.  
+During gameplay, the player uses the Force through a specific keybind. The goal is to keep an indicator within a certain range in order to unscrew the ball.  
+If the player is caught, Din Djarin reverses the player’s progress.  
+Occasionally, a special range may appear, giving the player an "unscrew boost" to recover lost progress.  
+
+TODO: Gameflow
+
+## UI / UX
+
+### Main menu / score display
+
+From the main menu, the player can:  
+
+- Start a new game
+- Access the settings panel
+- Exit the game
+
+By default, the main menu also displays:  
+
+- The top scores achieved by other players
+- The local player's personal best
+
+In the background, a chibi version of the Razor Crest floats across the screen, with Grogu and Din Djarin’s heads visible.
+
+### Settings
+
+The settings menu allows the player to customize visual, audio, and control preferences.
+
+**Visual Settings**
+
+- Screen resolution
+- Refresh rate
+
+After changing a visual setting, a confirmation popup appears to validate or revert the changes.
+
+**Audio Settings**
+
+- Master volume
+- Music volume
+- SFX volume
+
+Each volume setting has a sound test button for instant feedback.
+
+**Keybind Settings**
+
+- Mouse controls
+- Keyboard controls
+- Gamepad controls
+
+If the player attempts to rebind a key using an unsupported device, a popup will notify them and cancel the operation.
+
+A "Restore Default Settings" button is also available in all categories.
+
+### Start game
+
+### Loading
+
+### Pause menu
+
+### Game HUD
