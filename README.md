@@ -12,7 +12,7 @@
 <u>**Estimated Playtime:**</u> 30–45 minutes  
 <u>**Camera Perspective:**</u> First-person  
 
-### Introduction
+### Introduction, Story and universe
 
 Baby Yoda’s Game (aka ByGame) is a one-button arcade game inspired by the Disney+ show The Mandalorian.  
 The game takes place aboard the Razor Crest, the flagship of the Mandalorian and his protégé, Grogu — also known as Baby Yoda.  
@@ -35,5 +35,39 @@ A light-hearted arcade experience blending Star Wars fanservice with sneaky game
 - The mandalorian / Star wars shows as the characters and universe reference
 - Game doc geraud
 - Menus/UI visuals Star wars Outlaws by Ubisoft
+- Paper Mario / Night in the Woods (for stylized 2D character animation)
+- Among Us (for minimalistic sci-fi interiors)
+- Children's book illustrations (for softness and clarity of forms)
 
-### Story and universe
+### Artistic direction
+
+#### Visual
+
+<u>Visual Style:</u>
+The game features a stylized 2D art style with clean lines and soft shading, evoking a playful yet slightly tense atmosphere. The visuals are cartoon-like, with exaggerated proportions and smooth animations to emphasize Grogu’s cuteness and expressiveness. Despite the simplified look, the art direction remains faithful to the Star Wars universe in its design language.
+We want for the player to see the world through grogu's eyes.
+
+<u>Color Palette:</u>
+Muted greys and browns dominate the Razor Crest's interior, reflecting its rugged, industrial feel. Grogu is highlighted with warmer, more saturated tones (green, beige, brown) to draw the player's eye. Important interactive elements — like the control panel ball — use bright accents (e.g., silver, blinking red/blue lights) to enhance visibility and focus.
+
+<u>Character Design:</u>
+Grogu is presented in a chibi-inspired design, with large eyes and fluid, playful animations that highlight his curiosity.  
+Mando appears only in partial views — his legs, cape, or silhouette in the background — helping build tension and giving the player a sense of being watched.
+
+<u>UI/UX:</u>
+The objective is to have a diegetic interface — no external HUD or indicators. Feedback is conveyed through visual cues (Grogu’s facial expressions, light flashes, environmental shaking) and subtle audio hints. This reinforces immersion and maintains the first-person illusion from Grogu's perspective.
+For the moment, we use classic HUD to give player the needed informations.
+
+#### Audio
+
+### Characters
+
+#### Grogu aka Baby yoda
+
+Baby yoda is a character from the Star Wars Disney+ original television series The Mandalorian and The Book of Boba Fett. He is an infant member of the same species as the Star Wars characters Yoda and Yaddle, with whom he shares a strong ability in the Force. In the series, the protagonist known as "the Mandalorian" is hired to track down and capture Grogu for a remnant of the fallen Galactic Empire, but instead, he becomes his adoptive father and protects him from the Imperials.
+
+#### Din Djarin (aka The Mandalorian)
+
+Din Djarin is a stoic and disciplined bounty hunter who rarely removes his helmet and lives by the Mandalorian code. As Grogu’s reluctant guardian, he balances toughness with a quiet sense of protectiveness. In the game, he serves as a looming authority figure — ever-present, unpredictable, and the main obstacle to Grogu’s mischief.
+
+## Gameplay
