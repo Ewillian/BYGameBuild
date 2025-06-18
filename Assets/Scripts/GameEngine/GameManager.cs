@@ -75,10 +75,12 @@ public class GameManager : MonoBehaviour
     {
         _events = EventManager.GetInstance();
         _difficulty = DifficultyManager.GetInstance();
-        _difficulty.SetDifficulty(DifficultyEnum.Normal);
         _playerControler = transform.parent.GetComponentInChildren<PlayerManager>();
         _currentGameEnum = GameEnum.Idle;
         _currentMandoEnum = MandoEnum.Idle;
+
+        int newDifficulty = PlayerPrefs.GetInt("DifficultyLevel", (int) DifficultyType.Easy);
+        _difficulty.SetDifficulty(DifficultyType.IsDefined(typeof(DifficultyType), newDifficulty) ? (DifficultyType) newDifficulty : DifficultyType.Easy);
 
         GameObject gameDurationUiDebug_GameObject = GameObject.Find("_gameDurationValue");
         if(gameDurationUiDebug_GameObject != null)

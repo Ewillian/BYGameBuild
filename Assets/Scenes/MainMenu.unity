@@ -3131,6 +3131,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: NormalButton
       objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 74784060}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetDifficulty
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DifficultyUi, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1449898416107229284, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
       propertyPath: m_text
       value: Jedi
@@ -3243,6 +3275,38 @@ PrefabInstance:
     - target: {fileID: 372934983012486286, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
       propertyPath: m_Name
       value: HardButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 74784060}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetDifficulty
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DifficultyUi, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1449898416107229284, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
       propertyPath: m_text
@@ -8880,6 +8944,34 @@ PrefabInstance:
     - target: {fileID: 372934983012486286, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
       propertyPath: m_Name
       value: EasyButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 74784060}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetDifficulty
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DifficultyUi, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111023029458381320, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1449898416107229284, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
       propertyPath: m_text
