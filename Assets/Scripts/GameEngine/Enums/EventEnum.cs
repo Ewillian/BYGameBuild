@@ -1,4 +1,5 @@
 public enum EventEnum
 {
-    Mando = 0
+    Mando = 0,
+    Game = 1
 }

@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
 
     private EventManager _events;
     private DifficultyManager _difficulty;
-    private MandoState _currentMandoState;
+    private GameEnum _currentGameEnum;
+    private MandoEnum _currentMandoEnum;
     private PlayerManager _playerControler;
     private int _gameDuration;
     private int _targetDuration;
@@ -30,9 +31,41 @@ public class GameManager : MonoBehaviour
     private TMP_Text _triggerBeforeTimerUiDebug;
     private TMP_Text _triggerDuringTimerUiDebug;
 
+    public GameObject _buttonStartGame;
+
+    public GameObject _buttonStopGame;
+
     #endregion Fields
 
     #region Public methods
+
+    // Start is called at the creation of GameManager
+    public void StartGame()
+    {
+        UpdateGameEvent(GameEnum.Start);
+
+        _buttonStartGame.SetActive(false);
+        _buttonStopGame.SetActive(true);
+
+        InitGameDuration();
+        InitTarget();
+        InitBeforeMando();
+        InitDuringMando();
+
+        // Starting in 0 seconds, a call will be do every 1 seconds
+        InvokeRepeating("UpdateGameTime", 0, 1);
+    }
+
+    // Stop is called once the timer is reached
+    public void StopGame()
+    {
+        UpdateGameEvent(GameEnum.Stop);
+
+        CancelInvoke("UpdateGameTime");
+
+        _buttonStartGame.SetActive(true);
+        _buttonStopGame.SetActive(false);
+    }
 
     #endregion Public methods
 
@@ -42,9 +75,10 @@ public class GameManager : MonoBehaviour
     {
         _events = EventManager.GetInstance();
         _difficulty = DifficultyManager.GetInstance();
-        _difficulty.SetDifficulty(DifficultyType.Hard);
+        _difficulty.SetDifficulty(DifficultyEnum.Normal);
         _playerControler = transform.parent.GetComponentInChildren<PlayerManager>();
-        _currentMandoState = MandoState.Idle;
+        _currentGameEnum = GameEnum.Idle;
+        _currentMandoEnum = MandoEnum.Idle;
 
         GameObject gameDurationUiDebug_GameObject = GameObject.Find("_gameDurationValue");
         if(gameDurationUiDebug_GameObject != null)
@@ -82,18 +116,12 @@ public class GameManager : MonoBehaviour
             _triggerDuringTimerUiDebug = triggerDuringTimerValue_GameObject.GetComponent<TMP_Text>();
         }
 
-        InitGameDuration();
-        InitTarget();
-        InitBeforeMando();
-        InitDuringMando();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        // Starting in 0 seconds, a projectile will be launched every 1 seconds
-        InvokeRepeating("UpdateGameTime", 0, 1);
-        // CancelInvoke("UpdateGameTime");
+        StartGame();
     }
 
     // Update is called once per frame
@@ -104,32 +132,32 @@ public class GameManager : MonoBehaviour
 
     private void InitGameDuration()
     {
-        _gameDuration = _difficulty.GetDifficultyStats().GAME_DURATION_MAX;
+        _gameDuration = _difficulty.GAME_DURATION_MAX;
     }
 
     private void InitTarget()
     {
         _targetScore = UnityEngine.Random.Range(5, 95);
 
-        _targetDuration = _difficulty.GetDifficultyStats().TARGET_DURATION_MAX;
+        _targetDuration = _difficulty.TARGET_DURATION_MAX;
 
-        _currentMandoState = MandoState.Idle;
+        _currentMandoEnum = MandoEnum.Idle;
     }
 
     private void InitBeforeMando()
     {
         _mando = true;
-        _triggerBeforeTimer = UnityEngine.Random.Range(_difficulty.GetDifficultyStats().TRIGGER_BEFORE_TIMER_MIN, _difficulty.GetDifficultyStats().TRIGGER_BEFORE_TIMER_MAX);
+        _triggerBeforeTimer = UnityEngine.Random.Range(_difficulty.TRIGGER_BEFORE_TIMER_MIN, _difficulty.TRIGGER_BEFORE_TIMER_MAX);
 
-        _currentMandoState = MandoState.Prepare;
+        _currentMandoEnum = MandoEnum.Prepare;
     }
 
     private void InitDuringMando()
     {
         _mando = false;
-        _triggerDuringTimer = _difficulty.GetDifficultyStats().TRIGGER_DURING_TIMER_MAX;
+        _triggerDuringTimer = _difficulty.TRIGGER_DURING_TIMER_MAX;
 
-        _currentMandoState = MandoState.Check;
+        _currentMandoEnum = MandoEnum.Check;
     }
 
     // Call every seconds
@@ -140,22 +168,33 @@ public class GameManager : MonoBehaviour
         UpdateTarget();
         UpdateGameDuration();
 
-        _events.Notify(EventEnum.Mando, (int) _currentMandoState);
+        UpdateMandoEvent();
 
         UpdateDebugUi();
+    }
+
+    private void UpdateGameEvent(GameEnum newCurrentGame)
+    {
+        _currentGameEnum = newCurrentGame;
+        _events.Notify(EventEnum.Game, (int) _currentGameEnum);
+    }
+
+    private void UpdateMandoEvent()
+    {
+        _events.Notify(EventEnum.Mando, (int) _currentMandoEnum);
     }
 
     private void UpdateScore()
     {
         if (_mando && InputManager.Action())
         {
-            _score = _score - _difficulty.GetDifficultyStats().LOSE_SCORE <= 0 ? 0 : _score - _difficulty.GetDifficultyStats().LOSE_SCORE;
+            _score = _score - _difficulty.LOSE_SCORE <= 0 ? 0 : _score - _difficulty.LOSE_SCORE;
 
-            _currentMandoState = MandoState.Found;
+            _currentMandoEnum = MandoEnum.Found;
         }
-        else if (_playerControler.PowerValue >= _targetScore - _difficulty.GetDifficultyStats().RANGE && _playerControler.PowerValue <= _targetScore + _difficulty.GetDifficultyStats().RANGE)
+        else if (_playerControler.PowerValue >= _targetScore - _difficulty.RANGE && _playerControler.PowerValue <= _targetScore + _difficulty.RANGE)
         {
-            _score += _difficulty.GetDifficultyStats().GAIN_SCORE;
+            _score += _difficulty.GAIN_SCORE;
         }
     }
 
@@ -195,9 +234,7 @@ public class GameManager : MonoBehaviour
         _gameDuration -= 1;
         if (_gameDuration == 0)
         {
-            CancelInvoke("UpdateGameTime");
-
-            InitGameDuration();
+            StopGame();
         }
     }
     

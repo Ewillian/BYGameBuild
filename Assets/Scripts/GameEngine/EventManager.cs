@@ -48,7 +48,7 @@ public class EventManager
 
         foreach (var listener in _listeners[eventEnum])
         {
-            listener.EventUpdate(data);
+            listener.EventUpdate(eventEnum, data);
         }
     }
 }

@@ -1,4 +1,4 @@
-public enum MandoState
+public enum MandoEnum
 {
     Idle = 0,
     Prepare = 1,
