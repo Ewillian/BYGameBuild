@@ -6,12 +6,12 @@ public class DifficultyUI : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        PlayerPrefs.SetInt("DifficultyLevel", (int) DifficultyType.Easy);
+        PlayerPrefs.SetInt("DifficultyLevel", (int) DifficultyEnum.Easy);
     }
 
     public void SetDifficulty(int newDifficulty)
     {
-        PlayerPrefs.SetInt("DifficultyLevel", DifficultyType.IsDefined(typeof(DifficultyType), newDifficulty) ? newDifficulty : (int) DifficultyType.Easy);
+        PlayerPrefs.SetInt("DifficultyLevel", DifficultyEnum.IsDefined(typeof(DifficultyEnum), newDifficulty) ? newDifficulty : (int) DifficultyEnum.Easy);
     }
 
     public void Play()

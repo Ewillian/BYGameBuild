@@ -79,8 +79,8 @@ public class GameManager : MonoBehaviour
         _currentGameEnum = GameEnum.Idle;
         _currentMandoEnum = MandoEnum.Idle;
 
-        int newDifficulty = PlayerPrefs.GetInt("DifficultyLevel", (int) DifficultyType.Easy);
-        _difficulty.SetDifficulty(DifficultyType.IsDefined(typeof(DifficultyType), newDifficulty) ? (DifficultyType) newDifficulty : DifficultyType.Easy);
+        int newDifficulty = PlayerPrefs.GetInt("DifficultyLevel", (int) DifficultyEnum.Easy);
+        _difficulty.SetDifficulty(DifficultyEnum.IsDefined(typeof(DifficultyEnum), newDifficulty) ? (DifficultyEnum) newDifficulty : DifficultyEnum.Easy);
 
         GameObject gameDurationUiDebug_GameObject = GameObject.Find("_gameDurationValue");
         if(gameDurationUiDebug_GameObject != null)
