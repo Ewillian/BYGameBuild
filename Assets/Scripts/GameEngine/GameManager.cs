@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject _buttonStopGame;
 
+    public GameObject _containerMenuPause;
+
     #endregion Fields
 
     #region Public methods
@@ -46,6 +48,7 @@ public class GameManager : MonoBehaviour
 
         _buttonStartGame.SetActive(false);
         _buttonStopGame.SetActive(true);
+        _containerMenuPause.SetActive(false);
 
         InitGameDuration();
         InitTarget();
