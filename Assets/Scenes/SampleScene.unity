@@ -4674,7 +4674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buttonStartGame: {fileID: 215024921}
   _buttonStopGame: {fileID: 781863110}
-  _containerMenuPause: {fileID: 319395244}
+  _containerMenuPause: {fileID: 1181490148}
 --- !u!1 &2073449714
 GameObject:
   m_ObjectHideFlags: 0
