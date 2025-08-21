@@ -130,8 +130,29 @@ A "Restore Default Settings" button is also available in all categories.
 
 ### Start game
 
+When a player starts a game, he can choose between 3 different difficulties:
+
+- Padawan for easy
+- Jedi knight for normal
+- Master for hard
+
+The game duration, Mando checks, and others mutators are applied Depending on the difficulty
+
+Then the player starts the game. The base game is in normal difficulty.
+
 ### Loading
 
+The loading screen shows tips and tricks about the gameplay. It will wait for the player to press a key before exiting the loading screen.
+
 ### Pause menu
+
+The pause menu is triggered by ESC key and keyboard or Start key on Gamepad
+
+It gives the payer to be able to:
+- Resume the paused game
+- Restart the game with/without switching the game difficulty
+- Go to the main menu
+- Personalize some settings
+- Leave the game
 
 ### Game HUD
