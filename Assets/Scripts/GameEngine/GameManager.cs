@@ -2,6 +2,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -58,7 +59,7 @@ public class GameManager : MonoBehaviour
         InitBeforeMando();
         InitDuringMando();
 
-        InputManager.instance.PauseAction.performed += OnPause;
+        InputManager.instance.PauseAction.performed += TogglePause;
 
         // Starting in 0 seconds, a call will be do every 1 seconds
         InvokeRepeating("UpdateGameTime", 0, 1);
@@ -75,6 +76,32 @@ public class GameManager : MonoBehaviour
 
         _buttonStartGame.SetActive(true);
         _buttonStopGame.SetActive(false);
+    }
+
+    /// <summary>
+    /// Can be called from a UI Button OnClick event to toggle pause/resume.
+    /// </summary>
+    public void TogglePauseFromUI()
+    {
+        OnPause();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void QuitGame()
+    {
+        PlayerPrefs.Save();
+        StopAllCoroutines();
+        Application.Quit();
     }
 
     #endregion Public methods
@@ -138,7 +165,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        InputManager.instance.PauseAction.performed -= OnPause;
+        InputManager.instance.PauseAction.performed -= TogglePause;
     }
 
     // Update is called once per frame
@@ -178,12 +205,24 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Called by the Input System when the PauseAction is performed.
     /// </summary>
-    /// <param name="context"></param>
-    private void OnPause(InputAction.CallbackContext context)
+    /// <param name="context">The input callback context.</param>
+    private void TogglePause(InputAction.CallbackContext context)
     {
-        Debug.Log("Call On Pause");
+        OnPause();
+    }
+
+    /// <summary>
+    /// Handles the pause and resume logic when the PauseAction input is triggered.
+    /// If the game is not currently paused, it switches to pause state,
+    /// cancels the repeating game time updates, and shows the pause menu.
+    /// If the game is already paused, it resumes the game,
+    /// hides the pause menu, and restarts the repeating game time updates.
+    /// </summary>
+    /// <param name="context">The input callback context provided by the Input System when the action is triggered.</param>
+    private void OnPause()
+    {
         if (_currentGameEnum != GameEnum.Pause)
         {
             UpdateGameEvent(GameEnum.Pause);
