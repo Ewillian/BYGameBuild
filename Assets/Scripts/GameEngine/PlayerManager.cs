@@ -72,7 +72,7 @@ public class PlayerManager : MonoBehaviour, IEventListener
 
     private void UpdatePowerValue()
     {
-        if (_currentGameEnum != GameEnum.Start)
+        if (_currentGameEnum != GameEnum.Start && _currentGameEnum != GameEnum.Resume)
         {
             return;
         }

@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
     private int _score;
 
     private bool _mando = false;
-    private bool _isPaused = false;
     private int _triggerBeforeTimer;
     private int _triggerDuringTimer;
 
@@ -87,7 +86,7 @@ public class GameManager : MonoBehaviour
         _events = EventManager.GetInstance();
         _difficulty = DifficultyManager.GetInstance();
         _playerControler = transform.parent.GetComponentInChildren<PlayerManager>();
-        _currentGameEnum = GameEnum.Idle;
+        UpdateGameEvent(GameEnum.Idle);
         _currentMandoEnum = MandoEnum.Idle;
 
         int newDifficulty = PlayerPrefs.GetInt("DifficultyLevel", (int)DifficultyEnum.Easy);
@@ -184,17 +183,18 @@ public class GameManager : MonoBehaviour
     /// <param name="context"></param>
     private void OnPause(InputAction.CallbackContext context)
     {
-        if (_isPaused)
+        Debug.Log("Call On Pause");
+        if (_currentGameEnum != GameEnum.Pause)
         {
-            _containerMenuPause.SetActive(false);
-            InvokeRepeating("UpdateGameTime", 0, 1);
-            _isPaused = false;
+            UpdateGameEvent(GameEnum.Pause);
+            CancelInvoke("UpdateGameTime");
+            _containerMenuPause.SetActive(true);
         }
         else
         {
-            CancelInvoke("UpdateGameTime");
-            _containerMenuPause.SetActive(true);
-            _isPaused = true;
+            UpdateGameEvent(GameEnum.Resume);
+            _containerMenuPause.SetActive(false);
+            InvokeRepeating("UpdateGameTime", 0, 1);
         }
     }
 
