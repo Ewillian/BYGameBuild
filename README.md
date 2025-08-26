@@ -61,7 +61,29 @@ For the moment, we use classic HUD to give player the needed informations.
 
 #### Audio
 
-TODO
+##### Music
+
+Theme sci-fi Star Wars.
+In main menu, chill music.
+In game, can increase tempo to give player sense of hurry. Also give information about the timer status. 
+Victory music when game is won.
+Defeat music when game is lost.
+
+##### Feedback
+
+Menu:
+- Button click & change confirmation
+- Menu switch sound effect
+- Confirm save options modification sound effect
+- Start game sound effect
+
+In Game:
+
+- Mando makes an alert noises before checking on Grogu. Giving the player time to stop progressing and not being caught.
+> Difficulty progression: Mando may want to check on BY, but can be distracted with an alert console randomly. He could ignore the alert and fix the problem after the check. Like a 50/50 chance to check before repair. Gives the player the risk decision making
+
+- Audio clue for player progression when reaching a step (25%, 50%, 75%)
+- Audio clue when player is caught and progression is lost
 
 ### Characters
 
@@ -80,7 +102,7 @@ During gameplay, the player uses the Force through a specific keybind. The goal 
 If the player is caught, Din Djarin reverses the player’s progress.  
 Occasionally, a special range may appear, giving the player an "unscrew boost" to recover lost progress.  
 
-TODO: Gameflow
+![image](https://hackmd.io/_uploads/rkcd-EjYgx.png)
 
 ## UI / UX
 
@@ -146,13 +168,23 @@ The loading screen shows tips and tricks about the gameplay. It will wait for th
 
 ### Pause menu
 
-The pause menu is triggered by ESC key and keyboard or Start key on Gamepad
+The pause menu is triggered by the ESC key on the keyboard or the Start button on the gamepad.
 
-It gives the payer to be able to:
+It allows the player to:
+
 - Resume the paused game
-- Restart the game with/without switching the game difficulty
-- Go to the main menu
-- Personalize some settings
-- Leave the game
+- Restart the game, with or without changing the difficulty
+- Return to the main menu
+- Customize certain settings
+- Exit the game
 
 ### Game HUD
+
+The in-game HUD is made up of:
+
+- A player progression indicator, divided into steps, to give the player clues about their progression.
+- A travel progression bar to show how close the player is to the stage’s end (like a timer).
+- A player slider used to visualize force usage, with a range indicator.
+- The Mandalorian switching between visuals for each state (Idle, Checking, Cancel, Repair).
+- (If validated) A damaged console acting as the Mando’s distraction.
+
