@@ -21,17 +21,15 @@ public class GameManager : MonoBehaviour
     private int _targetDuration;
     private int _targetScore;
     private int _score;
-
-    private bool _mando = false;
     private int _triggerBeforeTimer;
     private int _triggerDuringTimer;
 
     private TMP_Text _gameDurationUiDebug;
     private TMP_Text _scoreUiDebug;
     private TMP_Text _targetScoreUiDebug;
-    private TMP_Text _mandoCheckUiDebug;
     private TMP_Text _triggerBeforeTimerUiDebug;
     private TMP_Text _triggerDuringTimerUiDebug;
+    private TMP_Text _currentMandoStateUiDebug;
 
     public GameObject _buttonStartGame;
 
@@ -48,8 +46,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        UpdateGameEvent(GameEnum.Start);
-
         _buttonStartGame.SetActive(false);
         _buttonStopGame.SetActive(true);
         _containerMenuPause.SetActive(false);
@@ -60,6 +56,9 @@ public class GameManager : MonoBehaviour
         InitDuringMando();
 
         InputManager.instance.PauseAction.performed += TogglePause;
+
+        _currentMandoEnum = MandoEnum.Idle;
+        UpdateGameEvent(GameEnum.Start);
 
         // Starting in 0 seconds, a call will be do every 1 seconds
         InvokeRepeating("UpdateGameTime", 0, 1);
@@ -137,12 +136,6 @@ public class GameManager : MonoBehaviour
             _targetScoreUiDebug = targetScoreValue_GameObject.GetComponent<TMP_Text>();
         }
 
-        GameObject mandoCheckValue_GameObject = GameObject.Find("_mandoCheckValue");
-        if (mandoCheckValue_GameObject != null)
-        {
-            _mandoCheckUiDebug = mandoCheckValue_GameObject.GetComponent<TMP_Text>();
-        }
-
         GameObject triggerBeforeTimerValue_GameObject = GameObject.Find("_triggerBeforeTimerValue");
         if (triggerBeforeTimerValue_GameObject != null)
         {
@@ -153,6 +146,12 @@ public class GameManager : MonoBehaviour
         if (triggerDuringTimerValue_GameObject != null)
         {
             _triggerDuringTimerUiDebug = triggerDuringTimerValue_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject currentMandoStateValue_GameObject = GameObject.Find("_currentMandoStateValue");
+        if (currentMandoStateValue_GameObject != null)
+        {
+            _currentMandoStateUiDebug = currentMandoStateValue_GameObject.GetComponent<TMP_Text>();
         }
 
     }
@@ -184,24 +183,20 @@ public class GameManager : MonoBehaviour
         _targetScore = UnityEngine.Random.Range(5, 95);
 
         _targetDuration = _difficulty.TARGET_DURATION_MAX;
-
-        _currentMandoEnum = MandoEnum.Idle;
     }
 
     private void InitBeforeMando()
     {
-        _mando = true;
         _triggerBeforeTimer = UnityEngine.Random.Range(_difficulty.TRIGGER_BEFORE_TIMER_MIN, _difficulty.TRIGGER_BEFORE_TIMER_MAX);
 
-        _currentMandoEnum = MandoEnum.Prepare;
+        _currentMandoEnum = MandoEnum.Check;
     }
 
     private void InitDuringMando()
     {
-        _mando = false;
         _triggerDuringTimer = _difficulty.TRIGGER_DURING_TIMER_MAX;
 
-        _currentMandoEnum = MandoEnum.Check;
+        _currentMandoEnum = MandoEnum.Idle;
     }
 
     /// <summary>
@@ -240,8 +235,9 @@ public class GameManager : MonoBehaviour
     // Call every seconds
     private void UpdateGameTime()
     {
-        UpdateScore();
         UpdateMando();
+        UpdateScore();
+
         UpdateTarget();
         UpdateGameDuration();
 
@@ -263,7 +259,7 @@ public class GameManager : MonoBehaviour
 
     private void UpdateScore()
     {
-        if (_mando && InputManager.Action())
+        if ((_currentMandoEnum == MandoEnum.Check || _currentMandoEnum == MandoEnum.Found) && InputManager.Action())
         {
             _score = _score - _difficulty.LOSE_SCORE <= 0 ? 0 : _score - _difficulty.LOSE_SCORE;
 
@@ -277,23 +273,30 @@ public class GameManager : MonoBehaviour
 
     private void UpdateMando()
     {
-        if (_mando)
+        switch(_currentMandoEnum)
         {
-            // Time during _mando check
-            _triggerDuringTimer -= 1;
-            if (_triggerDuringTimer <= 0)
-            {
-                InitDuringMando();
-            }
-        }
-        else
-        {
-            // Time before _mando check
-            _triggerBeforeTimer -= 1;
-            if(_triggerBeforeTimer <= 0)
-            {
-                InitBeforeMando();
-            }
+            case MandoEnum.Idle:
+            case MandoEnum.Prepare:
+                // Time before _mando check
+                _triggerBeforeTimer -= 1;
+                if(_triggerBeforeTimer <= 0)
+                {
+                    InitBeforeMando();
+                }
+                else if(_triggerBeforeTimer <= _difficulty.TRIGGER_PREPARE_TIMER)
+                {
+                    _currentMandoEnum = MandoEnum.Prepare;
+                }
+                break;
+            case MandoEnum.Check:
+            case MandoEnum.Found:
+                // Time during _mando check
+                _triggerDuringTimer -= 1;
+                if (_triggerDuringTimer <= 0)
+                {
+                    InitDuringMando();
+                }
+                break;
         }
     }
 
@@ -344,15 +347,6 @@ public class GameManager : MonoBehaviour
             Debug.Log($"_targetScore: {_targetScore}");
         }
 
-        if(!_mandoCheckUiDebug.IsUnityNull())
-        {
-            _mandoCheckUiDebug.SetText(_mando.ToString());
-        }
-        else
-        {
-            Debug.Log($"_mando check: {_mando}");
-        }
-
         if(!_triggerBeforeTimerUiDebug.IsUnityNull())
         {
             _triggerBeforeTimerUiDebug.SetText(_triggerBeforeTimer.ToString());
@@ -369,6 +363,15 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log($"_triggerDuringTimer: {_triggerDuringTimer}");
+        }
+
+        if(!_currentMandoStateUiDebug.IsUnityNull())
+        {
+            _currentMandoStateUiDebug.SetText(_currentMandoEnum.ToString());
+        }
+        else
+        {
+            Debug.Log($"_currentMandoStateValue: {_currentMandoEnum}");
         }
     }
 

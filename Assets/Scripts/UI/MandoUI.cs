@@ -35,8 +35,8 @@ public class MandoUI : MonoBehaviour, IEventListener
         for(var i = 0; i < _mandoVisuals.Count; i++)
         {
             bool current = false;
-            
-            if(targetMando == i)
+
+            if(targetMando == i || (targetMando == 1 && (i == 0 || i == 1)))
             {
                 current = true;
             }
