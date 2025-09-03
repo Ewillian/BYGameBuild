@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public class EventManager
 {
@@ -6,7 +7,7 @@ public class EventManager
 
     private Dictionary<EventEnum, List<IEventListener>> _listeners;
 
-    private EventManager() 
+    private EventManager()
     {
         _listeners = new Dictionary<EventEnum, List<IEventListener>>();
     }
@@ -41,7 +42,7 @@ public class EventManager
 
     public void Notify(EventEnum eventEnum, int data)
     {
-        if(!_listeners.ContainsKey(eventEnum) || _listeners[eventEnum].Count <= 0)
+        if (!_listeners.ContainsKey(eventEnum) || _listeners[eventEnum].Count <= 0 && !ValidEnumValue(eventEnum, data))
         {
             return;
         }
@@ -50,5 +51,18 @@ public class EventManager
         {
             listener.EventUpdate(eventEnum, data);
         }
+    }
+
+    public bool ValidEnumValue(EventEnum eventEnum, int currentData)
+    {
+        switch (eventEnum)
+        {
+            case EventEnum.Game:
+                return GameEnum.IsDefined(typeof(GameEnum), (GameEnum) currentData);
+            case EventEnum.Mando:
+                return MandoEnum.IsDefined(typeof(MandoEnum), (MandoEnum) currentData);
+        }
+
+        return false;
     }
 }

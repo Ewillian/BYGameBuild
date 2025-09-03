@@ -24,9 +24,11 @@ public class MandoUI : MonoBehaviour, IEventListener
 
     public void EventUpdate(EventEnum eventEnum, int data)
     {
-        if (eventEnum == EventEnum.Mando)
+        switch (eventEnum)
         {
-            setVisual(data);
+            case EventEnum.Mando:
+                setVisual(data);
+                break;
         }
     }
 
@@ -36,7 +38,7 @@ public class MandoUI : MonoBehaviour, IEventListener
         {
             bool current = false;
 
-            if(targetMando == i || (targetMando == 1 && (i == 0 || i == 1)))
+            if(targetMando == i || (MandoEnum.Prepare == (MandoEnum) targetMando && (i == 0 || i == 1)))
             {
                 current = true;
             }
