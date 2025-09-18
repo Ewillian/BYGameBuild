@@ -2,5 +2,7 @@ public enum GameEnum
 {
     Idle = 0,
     Start = 1,
-    Stop = 2
+    Stop = 2,
+    Resume = 3,
+    Pause = 4
 }

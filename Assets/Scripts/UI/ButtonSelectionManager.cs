@@ -10,10 +10,11 @@ using UnityEngine.UI;
 public class ButtonSelectionManager : MonoBehaviour
 {
     #region Public Fields
+
     /// <summary>
-    /// Singleton instance of the ButtonSelectionManager.
+    /// Singleton instance of the <see cref="ButtonSelectionManager"/>.
     /// </summary>
-    public static ButtonSelectionManager instance;
+    public static ButtonSelectionManager Instance { get; private set; }
 
     /// <summary>
     /// The last selected button.
@@ -29,22 +30,30 @@ public class ButtonSelectionManager : MonoBehaviour
     /// Array of buttons managed by this manager.
     /// </summary>
     public GameObject[] buttons;
+
     #endregion
 
     #region Private Methods
     /// <summary>
-    /// Initializes the singleton instance.
+    /// Unity awake default method
     /// </summary>
     private void Awake()
     {
-        if (instance == null)
+        SetInstance();
+    }
+
+    /// <summary>
+    /// Sets the singleton instance for <see cref="ButtonSelectionManager"/>
+    /// </summary>
+    private void SetInstance()
+    {
+        if (Instance != null && Instance != this)
         {
-            instance = this;
+            Destroy(gameObject);
+            return;
         }
-        else
-        {
-            Destroy(this);
-        }
+
+        Instance = this;
     }
 
     /// <summary>

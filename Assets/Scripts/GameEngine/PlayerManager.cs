@@ -60,19 +60,21 @@ public class PlayerManager : MonoBehaviour, IEventListener
 
     public void EventUpdate(EventEnum eventEnum, int data)
     {
-        if (eventEnum == EventEnum.Game)
+        switch (eventEnum)
         {
-            _currentGameEnum = (GameEnum)data;
-            if (GameEnum.Start == _currentGameEnum)
-            {
-                PowerValue = 0;
-            }
+            case EventEnum.Game:
+                _currentGameEnum = (GameEnum) data;
+                if (GameEnum.Start == _currentGameEnum)
+                {
+                    PowerValue = 0;
+                }
+                break;
         }
     }
 
     private void UpdatePowerValue()
     {
-        if (_currentGameEnum != GameEnum.Start)
+        if (_currentGameEnum != GameEnum.Start && _currentGameEnum != GameEnum.Resume)
         {
             return;
         }

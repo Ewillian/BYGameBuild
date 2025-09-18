@@ -28,6 +28,11 @@ public class InputManager : MonoBehaviour
     /// </summary>
     public bool ActionInput { get; private set; }
 
+    /// <summary>
+    /// Stores the action input.
+    /// </summary>
+    public InputAction PauseAction { get; private set; }
+
     private InputAction _movementAction;
     private InputAction _principalAction;
 
@@ -70,13 +75,15 @@ public class InputManager : MonoBehaviour
         }
 
         PlayerInput = GetComponent<PlayerInput>();
-        if(PlayerInput == null)
+        if (PlayerInput == null)
         {
             Debug.LogError("PlayerInput not found");
             return;
         }
+
         _movementAction = PlayerInput.actions["Navigate"];
         _principalAction = PlayerInput.actions["PrincipalAction"];
+        PauseAction = PlayerInput.actions["PauseAction"];
     }
 
     /// <summary>

@@ -13,9 +13,10 @@ public class DifficultyManager
         /// <param name="pTARGET_DURATION_MAX">Maximum time during which the target remains (in second)</param>
         /// <param name="pTRIGGER_BEFORE_TIMER_MIN">Minimum time before Mando remains active (in second)</param>
         /// <param name="pTRIGGER_BEFORE_TIMER_MAX">Maximum time before Mando remains active (in second)</param>
+        /// <param name="pTRIGGER_PREPARE_TIMER">Time to prevent player when Mando will check (in second)</param>
         /// <param name="pTRIGGER_DURING_TIMER_MAX">Maximum time where Mando remains active (in second)</param>
         /// <param name="pRANGE">Range in which the player wins a point (in percent) x2</param>
-        public DifficultyStats(int pGAME_DURATION_MAX, int pGAIN_SCORE, int pLOSE_SCORE, int pTARGET_DURATION_MAX, int pTRIGGER_BEFORE_TIMER_MIN, int pTRIGGER_BEFORE_TIMER_MAX, int pTRIGGER_DURING_TIMER_MAX, int pRANGE)
+        public DifficultyStats(int pGAME_DURATION_MAX, int pGAIN_SCORE, int pLOSE_SCORE, int pTARGET_DURATION_MAX, int pTRIGGER_BEFORE_TIMER_MIN, int pTRIGGER_BEFORE_TIMER_MAX, int pTRIGGER_PREPARE_TIMER, int pTRIGGER_DURING_TIMER_MAX, int pRANGE)
         {
             GAME_DURATION_MAX = pGAME_DURATION_MAX;
             GAIN_SCORE = pGAIN_SCORE;
@@ -23,6 +24,7 @@ public class DifficultyManager
             TARGET_DURATION_MAX = pTARGET_DURATION_MAX;
             TRIGGER_BEFORE_TIMER_MIN = pTRIGGER_BEFORE_TIMER_MIN;
             TRIGGER_BEFORE_TIMER_MAX = pTRIGGER_BEFORE_TIMER_MAX;
+            TRIGGER_PREPARE_TIMER = pTRIGGER_PREPARE_TIMER;
             TRIGGER_DURING_TIMER_MAX = pTRIGGER_DURING_TIMER_MAX;
             RANGE = pRANGE;
         }
@@ -33,6 +35,7 @@ public class DifficultyManager
         public int TARGET_DURATION_MAX { get; private set; }
         public int TRIGGER_BEFORE_TIMER_MIN { get; private set; }
         public int TRIGGER_BEFORE_TIMER_MAX { get; private set; }
+        public int TRIGGER_PREPARE_TIMER { get; private set; }
         public int TRIGGER_DURING_TIMER_MAX { get; private set; }
         public int RANGE { get; private set; }
     }
@@ -85,6 +88,12 @@ public class DifficultyManager
         private set {}
     }
 
+    public int TRIGGER_PREPARE_TIMER
+    {
+        get { return _difficultyDictionary[_currentDifficulty].TRIGGER_PREPARE_TIMER;}
+        private set {}
+    }
+
     public int TRIGGER_DURING_TIMER_MAX
     {
         get { return _difficultyDictionary[_currentDifficulty].TRIGGER_DURING_TIMER_MAX;}
@@ -103,11 +112,12 @@ public class DifficultyManager
 
     private DifficultyManager()
     {
-        _difficultyDictionary = new Dictionary<DifficultyEnum, DifficultyStats>();
-
-        _difficultyDictionary.Add(DifficultyEnum.Easy, new DifficultyStats(120, 5, 2, 10, 5, 25, 3, 13));
-        _difficultyDictionary.Add(DifficultyEnum.Normal, new DifficultyStats(90, 4, 4, 12, 3, 25, 3, 10));
-        _difficultyDictionary.Add(DifficultyEnum.Hard, new DifficultyStats(60, 3, 5, 15, 2, 20, 4, 7));
+        _difficultyDictionary = new Dictionary<DifficultyEnum, DifficultyStats>
+        {
+            { DifficultyEnum.Easy, new DifficultyStats(120, 5, 2, 10, 5, 25, 3, 3, 13) },
+            { DifficultyEnum.Normal, new DifficultyStats(90, 4, 4, 12, 3, 25, 2, 3, 10) },
+            { DifficultyEnum.Hard, new DifficultyStats(60, 3, 5, 15, 2, 20, 0, 4, 7) }
+        };
     }
 
     #endregion Private methods
