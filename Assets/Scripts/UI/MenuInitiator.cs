@@ -1,29 +1,59 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuInitiator : MonoBehaviour
 {
-#region private variables
-        [SerializeField] private GameObject MainPanel;
-        [SerializeField] private GameObject OptionPanel;
-        [SerializeField] private GameObject ScorePanel;
-        [SerializeField] private GameObject LeavePanel;
-#endregion
+    #region private variables 
 
-#region Private Methods
-        private IEnumerator Start()
+    [SerializeField] private List<GameObject> MenuPanels;
+    [SerializeField] private GameObject MainPanel;
+    #endregion private variables
+
+    #region Private Methods
+    private IEnumerator Start()
+    {
+        yield return StartCoroutine(InitiateMenu());
+    }
+
+    private IEnumerator InitiateMenu()
+    {
+        MainPanel.SetActive(true);
+        
+        foreach (var panel in MenuPanels)
         {
-            yield return StartCoroutine(InitiateMenu());
+            panel.SetActive(false);
         }
-    
-        private IEnumerator InitiateMenu()
+
+        yield break;
+    }
+    #endregion Private Methods
+
+    #region Public Methods
+
+    public void ShowMenu(GameObject panelToActivate)
+    {
+        if (!panelToActivate.activeSelf)
         {
-            MainPanel.SetActive(true);
-            OptionPanel.SetActive(false);
-            ScorePanel.SetActive(false);
-            LeavePanel.SetActive(false);
-    
-            yield break;
+            HideMenu();
+            panelToActivate.SetActive(true);
         }
-#endregion
+    }
+
+    public void HideMenu()
+    {
+        foreach (var panel in MenuPanels)
+        {
+            panel.SetActive(false);
+        }
+    }
+
+    public void QuitGame()
+    {
+        PlayerPrefs.Save();
+        StopAllCoroutines();
+        Application.Quit();
+    }
+    
+    #endregion Public Methods
 }
