@@ -373,7 +373,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 610, y: -506.3923}
-  m_SizeDelta: {x: 0, y: 100}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &74784058
 MonoBehaviour:
@@ -2473,8 +2473,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1530646410}
-        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 1779173078}
+        m_TargetAssemblyTypeName: MenuInitiator, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -5555,7 +5555,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 610, y: -410}
-  m_SizeDelta: {x: 0, y: 32.7846}
+  m_SizeDelta: {x: 714.02, y: 32.7846}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1347661185
 MonoBehaviour:
@@ -9084,7 +9084,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1411896034699116322, guid: fe17be48d263e4545b680e790fea2215, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1210
       objectReference: {fileID: 0}
     - target: {fileID: 1411896034699116322, guid: fe17be48d263e4545b680e790fea2215, type: 3}
       propertyPath: m_SizeDelta.y
