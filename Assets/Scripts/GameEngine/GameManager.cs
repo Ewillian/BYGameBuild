@@ -183,6 +183,7 @@ public class GameManager : MonoBehaviour
         _targetScore = UnityEngine.Random.Range(5, 95);
 
         _targetDuration = _difficulty.TARGET_DURATION_MAX;
+        UpdatePowerTargetEvent();
     }
 
     private void InitBeforeMando()
@@ -246,15 +247,20 @@ public class GameManager : MonoBehaviour
         UpdateDebugUi();
     }
 
+    private void UpdateMandoEvent()
+    {
+        _events.Notify(EventEnum.Mando, (int) _currentMandoEnum);
+    }
+
     private void UpdateGameEvent(GameEnum newCurrentGame)
     {
         _currentGameEnum = newCurrentGame;
         _events.Notify(EventEnum.Game, (int) _currentGameEnum);
     }
 
-    private void UpdateMandoEvent()
+    private void UpdatePowerTargetEvent()
     {
-        _events.Notify(EventEnum.Mando, (int) _currentMandoEnum);
+        _events.Notify(EventEnum.PowerTarget, (int) _targetScore);
     }
 
     private void UpdateScore()

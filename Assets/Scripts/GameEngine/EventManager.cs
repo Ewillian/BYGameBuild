@@ -40,9 +40,9 @@ public class EventManager
         }
     }
 
-    public void Notify(EventEnum eventEnum, int data)
+    public void Notify(EventEnum eventEnum, float data)
     {
-        if (!_listeners.ContainsKey(eventEnum) || _listeners[eventEnum].Count <= 0 && !ValidEnumValue(eventEnum, data))
+        if (!_listeners.ContainsKey(eventEnum) || _listeners[eventEnum].Count <= 0 || !ValidEnumValue(eventEnum, data))
         {
             return;
         }
@@ -53,7 +53,7 @@ public class EventManager
         }
     }
 
-    public bool ValidEnumValue(EventEnum eventEnum, int currentData)
+    public bool ValidEnumValue(EventEnum eventEnum, float currentData)
     {
         switch (eventEnum)
         {
@@ -61,6 +61,8 @@ public class EventManager
                 return GameEnum.IsDefined(typeof(GameEnum), (GameEnum) currentData);
             case EventEnum.Mando:
                 return MandoEnum.IsDefined(typeof(MandoEnum), (MandoEnum) currentData);
+            case EventEnum.PowerTarget:
+                return true;
         }
 
         return false;

@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: ed0460ba24bb428408bd304df940eec8
+guid: 4e9624de6576a6d4ea2948ba3926788b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -251652752677123456
-    second: MandoIdle_0
+      213: 6975699861891307013
+    second: PowerTarget_0
   - first:
-      213: 2636482786251129880
-    second: MandoIdle_1
+      213: 2295258006998099150
+    second: PowerTarget_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +49,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -116,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MandoIdle_0
+      name: PowerTarget_0
       rect:
         serializedVersion: 2
-        x: 118
-        y: 278
-        width: 685
-        height: 1045
+        x: 4
+        y: 7
+        width: 198
+        height: 276
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 08a4eed9723f18cf0800000000000000
-      internalID: -251652752677123456
+      spriteID: 506d5c7c01aaec060800000000000000
+      internalID: 6975699861891307013
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MandoIdle_1
+      name: PowerTarget_1
       rect:
         serializedVersion: 2
-        x: 248
-        y: 303
-        width: 38
-        height: 7
+        x: 511
+        y: 7
+        width: 198
+        height: 275
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,8 +153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8144eea102ba69420800000000000000
-      internalID: 2636482786251129880
+      spriteID: ec42efe1ff46adf10800000000000000
+      internalID: 2295258006998099150
       vertices: []
       indices: 
       edges: []
@@ -163,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -173,8 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      MandoIdle_0: -251652752677123456
-      MandoIdle_1: 2636482786251129880
+      PowerTarget_0: 6975699861891307013
+      PowerTarget_1: 2295258006998099150
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

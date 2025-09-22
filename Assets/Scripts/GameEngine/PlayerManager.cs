@@ -9,8 +9,6 @@ public class PlayerManager : MonoBehaviour, IEventListener
 
     private static float POWER_VALUE_GAIN = .1f;
     private static float POWER_VALUE_LOSE = .15f;
-
-    [SerializeField]
     private Slider _slider;
 
     public float PowerValue
@@ -58,7 +56,7 @@ public class PlayerManager : MonoBehaviour, IEventListener
 
     }
 
-    public void EventUpdate(EventEnum eventEnum, int data)
+    public void EventUpdate(EventEnum eventEnum, float data)
     {
         switch (eventEnum)
         {

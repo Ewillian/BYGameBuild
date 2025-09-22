@@ -1,4 +1,4 @@
 public interface IEventListener
 {
-    void EventUpdate(EventEnum eventEnum, int data);
+    void EventUpdate(EventEnum eventEnum, float data);
 }
