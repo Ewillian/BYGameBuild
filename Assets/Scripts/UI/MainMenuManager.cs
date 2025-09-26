@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -19,6 +19,12 @@ public class MenuInitiator : MonoBehaviour
     /// The main panel that is displayed by default when the menu starts.
     /// </summary>
     [SerializeField] private GameObject MainPanel;
+
+    /// <summary>
+    /// The actual displayed panel.
+    /// </summary>
+    private GameObject DisplayedPanel;
+
     #endregion private variables
 
     #region Private Methods
@@ -44,6 +50,8 @@ public class MenuInitiator : MonoBehaviour
             panel.SetActive(false);
         }
 
+        DisplayedPanel = MenuPanels.FirstOrDefault();
+
         yield break;
     }
 
@@ -52,16 +60,22 @@ public class MenuInitiator : MonoBehaviour
     #region Public Methods
 
     /// <summary>
-    /// Displays the specified panel while hiding all other panels.
+    /// Displays the specified panel while hiding the one it replaces.
     /// </summary>
     /// <param name="panelToActivate">The panel to display.</param>
     public void ShowMenu(GameObject panelToActivate)
     {
-        if (!panelToActivate.activeSelf)
+        if (DisplayedPanel == panelToActivate)
         {
-            HideMenu();
-            panelToActivate.SetActive(true);
+            return;
         }
+
+        var panelToBeFound = MenuPanels.FirstOrDefault(panel => panel == panelToActivate);
+
+        DisplayedPanel.SetActive(false);
+        panelToBeFound.SetActive(true); 
+
+        DisplayedPanel = panelToBeFound;
     }
 
     /// <summary>
