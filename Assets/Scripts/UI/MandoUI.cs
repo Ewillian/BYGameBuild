@@ -22,7 +22,7 @@ public class MandoUI : MonoBehaviour, IEventListener
         
     }
 
-    public void EventUpdate(EventEnum eventEnum, int data)
+    public void EventUpdate(EventEnum eventEnum, float data)
     {
         switch (eventEnum)
         {
@@ -32,7 +32,7 @@ public class MandoUI : MonoBehaviour, IEventListener
         }
     }
 
-    public void setVisual(int targetMando)
+    public void setVisual(float targetMando)
     {
         for(var i = 0; i < _mandoVisuals.Count; i++)
         {

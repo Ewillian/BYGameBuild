@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: ed0460ba24bb428408bd304df940eec8
+guid: d2bc9fb61bca9ca498686ad76d65de24
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -251652752677123456
-    second: MandoIdle_0
-  - first:
-      213: 2636482786251129880
-    second: MandoIdle_1
+      213: 3949128412875878659
+    second: MandoPrepare_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -116,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MandoIdle_0
+      name: MandoPrepare_0
       rect:
         serializedVersion: 2
-        x: 118
-        y: 278
-        width: 685
-        height: 1045
+        x: 138
+        y: 36
+        width: 173
+        height: 481
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,30 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 08a4eed9723f18cf0800000000000000
-      internalID: -251652752677123456
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MandoIdle_1
-      rect:
-        serializedVersion: 2
-        x: 248
-        y: 303
-        width: 38
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8144eea102ba69420800000000000000
-      internalID: 2636482786251129880
+      spriteID: 3017edd3e5f1ec630800000000000000
+      internalID: 3949128412875878659
       vertices: []
       indices: 
       edges: []
@@ -172,9 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      MandoIdle_0: -251652752677123456
-      MandoIdle_1: 2636482786251129880
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
