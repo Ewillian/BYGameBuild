@@ -45,12 +45,7 @@ public class MenuInitiator : MonoBehaviour
     {
         MainPanel.SetActive(true);
 
-        foreach (var panel in MenuPanels)
-        {
-            panel.SetActive(false);
-        }
-
-        DisplayedPanel = MenuPanels.FirstOrDefault();
+        HideMenu();
 
         yield break;
     }
@@ -65,15 +60,19 @@ public class MenuInitiator : MonoBehaviour
     /// <param name="panelToActivate">The panel to display.</param>
     public void ShowMenu(GameObject panelToActivate)
     {
-        if (DisplayedPanel == panelToActivate)
+        if (panelToActivate == null || DisplayedPanel == panelToActivate)
         {
             return;
         }
 
         var panelToBeFound = MenuPanels.FirstOrDefault(panel => panel == panelToActivate);
 
-        DisplayedPanel.SetActive(false);
-        panelToBeFound.SetActive(true); 
+        if (DisplayedPanel != null)
+        {
+            DisplayedPanel.SetActive(false);
+        }
+
+        panelToBeFound.SetActive(true);
 
         DisplayedPanel = panelToBeFound;
     }
