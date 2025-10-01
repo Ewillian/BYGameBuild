@@ -6,9 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    #region Static fields
+    #region Public fields
 
-    #endregion Static fields
+    public TMP_Text TextVague;
+
+    [Header("Menus containers")]
+    public GameObject ContainerMenuPause;
+    public GameObject ContainerMenuEnd;
+
+    #endregion Public fields
 
     #region Fields
 
@@ -31,12 +37,6 @@ public class GameManager : MonoBehaviour
     private TMP_Text _triggerDuringTimerUiDebug;
     private TMP_Text _currentMandoStateUiDebug;
 
-    public GameObject _buttonStartGame;
-
-    public GameObject _buttonStopGame;
-
-    public GameObject _containerMenuPause;
-
     #endregion Fields
 
     #region Public methods
@@ -46,9 +46,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        _buttonStartGame.SetActive(false);
-        _buttonStopGame.SetActive(true);
-        _containerMenuPause.SetActive(false);
+        ContainerMenuPause.SetActive(false);
+        ContainerMenuEnd.SetActive(false);
 
         InitGameDuration();
         InitTarget();
@@ -73,8 +72,17 @@ public class GameManager : MonoBehaviour
 
         CancelInvoke("UpdateGameTime");
 
-        _buttonStartGame.SetActive(true);
-        _buttonStopGame.SetActive(false);
+        TextVague.SetText($"{_score}");
+        ContainerMenuEnd.SetActive(true);
+    }
+
+    /// <summary>
+    /// Stop is called once the timer is reached
+    /// </summary>
+    public void RestartGame()
+    {
+        StopGame();
+        StartGame();
     }
 
     /// <summary>
@@ -225,12 +233,12 @@ public class GameManager : MonoBehaviour
         {
             UpdateGameEvent(GameEnum.Pause);
             CancelInvoke("UpdateGameTime");
-            _containerMenuPause.SetActive(true);
+            ContainerMenuPause.SetActive(true);
         }
         else
         {
             UpdateGameEvent(GameEnum.Resume);
-            _containerMenuPause.SetActive(false);
+            ContainerMenuPause.SetActive(false);
             InvokeRepeating("UpdateGameTime", 0, 1);
         }
     }
