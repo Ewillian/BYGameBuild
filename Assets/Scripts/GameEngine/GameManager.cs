@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     public GameObject ContainerMenuPause;
     public GameObject ContainerMenuEnd;
 
+    [Header("Debug container")]
+    public GameObject ContainerDebugUi;
+
     #endregion Public fields
 
     #region Fields
@@ -119,6 +122,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        ContainerDebugUi.SetActive(Debug.isDebugBuild);
+
         _events = EventManager.GetInstance();
         _difficulty = DifficultyManager.GetInstance();
         _playerControler = transform.parent.GetComponentInChildren<PlayerManager>();
