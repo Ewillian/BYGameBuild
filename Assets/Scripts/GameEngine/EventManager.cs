@@ -40,6 +40,15 @@ public class EventManager
         }
     }
 
+    public void UnSubscribeAll()
+    {
+        foreach (KeyValuePair<EventEnum, List<IEventListener>> entry in _listeners)
+        {
+            entry.Value.Clear();
+        }
+        _listeners.Clear();
+    }
+
     public void Notify(EventEnum eventEnum, float data)
     {
         if (!_listeners.ContainsKey(eventEnum) || _listeners[eventEnum].Count <= 0 || !ValidEnumValue(eventEnum, data))
