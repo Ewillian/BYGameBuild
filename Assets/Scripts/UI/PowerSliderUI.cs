@@ -47,6 +47,12 @@ public class PowerSliderUI : MonoBehaviour, IEventListener
         switch (eventEnum)
         {
             case EventEnum.PowerTarget:
+                if (_target == null)
+                {
+                    Debug.Log("PowerSliderUI: Error referencing transform");
+                    return;
+                }
+
                 float res = _bottomWorld.y + _onePercent * data;
                 _target.transform.SetPositionAndRotation(new Vector3(_bottomWorld.x, res, _bottomWorld.z), _target.transform.rotation);
                 break;

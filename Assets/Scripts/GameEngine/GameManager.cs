@@ -90,6 +90,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoadMainMenu()
     {
+        StopGame();
+        _events.UnSubscribeAll();
         SceneManager.LoadScene("MainMenu");
     }
 
