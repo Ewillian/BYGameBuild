@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
         InputManager.instance.PauseAction.performed += TogglePause;
 
         _currentMandoEnum = MandoEnum.Idle;
+        _score = 0;
+        
         UpdateGameEvent(GameEnum.Start);
 
         // Starting in 0 seconds, a call will be do every 1 seconds
