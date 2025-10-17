@@ -69,14 +69,16 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Stop is called once the timer is reached
     /// </summary>
-    public void StopGame()
+    public void StopGame(bool isEndGame)
     {
         UpdateGameEvent(GameEnum.Stop);
 
         CancelInvoke("UpdateGameTime");
-
-        TextVague.SetText($"{_score}");
-        ContainerMenuEnd.SetActive(true);
+        if (isEndGame)
+        {
+            TextVague.SetText($"{_score}");
+            ContainerMenuEnd.SetActive(true);
+        }
     }
 
     /// <summary>
@@ -84,7 +86,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void RestartGame()
     {
-        StopGame();
+        StopGame(false);
         StartGame();
     }
 
@@ -101,7 +103,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoadMainMenu()
     {
-        StopGame();
+        StopGame(false);
         _events.UnSubscribeAll();
         SceneManager.LoadScene("MainMenu");
     }
@@ -335,7 +337,7 @@ public class GameManager : MonoBehaviour
         _gameDuration -= 1;
         if (_gameDuration == 0)
         {
-            StopGame();
+            StopGame(true);
         }
     }
     
