@@ -6,9 +6,18 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    #region Static fields
+    #region Public fields
 
-    #endregion Static fields
+    public TMP_Text TextVague;
+
+    [Header("Menus containers")]
+    public GameObject ContainerMenuPause;
+    public GameObject ContainerMenuEnd;
+
+    [Header("Debug container")]
+    public GameObject ContainerDebugUi;
+
+    #endregion Public fields
 
     #region Fields
 
@@ -31,12 +40,6 @@ public class GameManager : MonoBehaviour
     private TMP_Text _triggerDuringTimerUiDebug;
     private TMP_Text _currentMandoStateUiDebug;
 
-    public GameObject _buttonStartGame;
-
-    public GameObject _buttonStopGame;
-
-    public GameObject _containerMenuPause;
-
     #endregion Fields
 
     #region Public methods
@@ -46,9 +49,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        _buttonStartGame.SetActive(false);
-        _buttonStopGame.SetActive(true);
-        _containerMenuPause.SetActive(false);
+        ContainerMenuPause.SetActive(false);
+        ContainerMenuEnd.SetActive(false);
 
         InitGameDuration();
         InitTarget();
@@ -58,6 +60,8 @@ public class GameManager : MonoBehaviour
         InputManager.instance.PauseAction.performed += TogglePause;
 
         _currentMandoEnum = MandoEnum.Idle;
+        _score = 0;
+        
         UpdateGameEvent(GameEnum.Start);
 
         // Starting in 0 seconds, a call will be do every 1 seconds
@@ -67,14 +71,25 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Stop is called once the timer is reached
     /// </summary>
-    public void StopGame()
+    public void StopGame(bool isEndGame)
     {
         UpdateGameEvent(GameEnum.Stop);
 
         CancelInvoke("UpdateGameTime");
+        if (isEndGame)
+        {
+            TextVague.SetText($"{_score}");
+            ContainerMenuEnd.SetActive(true);
+        }
+    }
 
-        _buttonStartGame.SetActive(true);
-        _buttonStopGame.SetActive(false);
+    /// <summary>
+    /// Stop is called once the timer is reached
+    /// </summary>
+    public void RestartGame()
+    {
+        StopGame(false);
+        StartGame();
     }
 
     /// <summary>
@@ -90,7 +105,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoadMainMenu()
     {
-        StopGame();
+        StopGame(false);
         _events.UnSubscribeAll();
         SceneManager.LoadScene("MainMenu");
     }
@@ -111,6 +126,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        ContainerDebugUi.SetActive(Debug.isDebugBuild);
+
         _events = EventManager.GetInstance();
         _difficulty = DifficultyManager.GetInstance();
         _playerControler = transform.parent.GetComponentInChildren<PlayerManager>();
@@ -225,12 +242,12 @@ public class GameManager : MonoBehaviour
         {
             UpdateGameEvent(GameEnum.Pause);
             CancelInvoke("UpdateGameTime");
-            _containerMenuPause.SetActive(true);
+            ContainerMenuPause.SetActive(true);
         }
         else
         {
             UpdateGameEvent(GameEnum.Resume);
-            _containerMenuPause.SetActive(false);
+            ContainerMenuPause.SetActive(false);
             InvokeRepeating("UpdateGameTime", 0, 1);
         }
     }
@@ -322,7 +339,7 @@ public class GameManager : MonoBehaviour
         _gameDuration -= 1;
         if (_gameDuration == 0)
         {
-            StopGame();
+            StopGame(true);
         }
     }
     
