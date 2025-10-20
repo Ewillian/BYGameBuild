@@ -1,14 +1,24 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
-    [Header("Blink Settings")]
-    public float speed = 2f;
-    public Color baseColor = Color.white;
-    public GameObject target;
+    [Header("Tutorial Elements")]
+    [SerializeField] private TMP_Text _tutorialText;
+    [SerializeField] private Button _previousButton;
+    [SerializeField] private Button _nextButton;
+    [SerializeField] private List<GameObject> _gameObjectList;
 
+    [Header("Blink Settings")]
+    [SerializeField] private float speed = 2f;
+    [SerializeField] private Color baseColor = Color.white;
+
+    private int _step;
+    private List<string> _tutorialMessages;
     private Renderer targetRenderer;
     private SpriteRenderer spriteRenderer;
     private Graphic uiGraphic;
@@ -20,8 +30,17 @@ public class TutorialManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SetTarget(target);
-        StartBlink();
+        _previousButton.onClick.AddListener(delegate ()
+        {
+            ApplyScript(false);
+        });
+
+        _nextButton.onClick.AddListener(delegate ()
+        {
+            ApplyScript(true);
+        });
+
+        ApplyScript(false);
     }
 
     // Update is called once per frame
@@ -29,9 +48,53 @@ public class TutorialManager : MonoBehaviour
     {
 
     }
-    
 
-    // 🎯 Définit la cible
+    private void Awake()
+    {
+        _tutorialMessages = new List<string>
+        {
+            "L'objectif du jeu est de récupérer le balle de Grogu",
+            "Pour cela, il faut amener la jauge à l'indicateur", "Attention ! Si mando vous voit, il resserrera la boule !", "Vous devez y arriver avant la fin du temps imparti.", "Que la force soit avec vous !"
+        };
+    }
+
+    private void ApplyScript(bool isNext)
+    {
+        if (_tutorialText == null) return;
+
+        if (isNext)
+        {
+            if (_step < _tutorialMessages.Count - 1)
+            {
+                _step++;
+            }
+        }
+        else
+        {
+            if (_step > 0)
+            {
+                _step--;
+            }
+        }
+
+        switch (_step)
+        {
+            case 0:
+                SetTarget(_gameObjectList.ElementAt(0));
+                break;
+            case 1:
+                SetTarget(_gameObjectList.ElementAt(1));
+                break;
+            case 2:
+                SetTarget(_gameObjectList.ElementAt(2));
+                break;
+        }
+
+        if (hasTarget) StartBlink();
+
+        _tutorialText.SetText(_tutorialMessages.ElementAt(_step));
+    }
+
     public void SetTarget(GameObject newTarget)
     {
         StopBlink();
@@ -72,7 +135,6 @@ public class TutorialManager : MonoBehaviour
         hasTarget = false;
     }
 
-    // 🔆 Lance le clignotement
     public void StartBlink()
     {
         if (!hasTarget)
@@ -80,14 +142,14 @@ public class TutorialManager : MonoBehaviour
             Debug.LogWarning("Impossible de clignoter : aucune cible définie.");
             return;
         }
-
+        Debug.Log($"notnull :{blinkRoutine != null}");
         if (blinkRoutine == null)
             blinkRoutine = StartCoroutine(BlinkCoroutine());
     }
 
-    // ❌ Stoppe le clignotement et restaure la couleur
     public void StopBlink()
     {
+
         if (blinkRoutine != null)
         {
             StopCoroutine(blinkRoutine);
@@ -105,7 +167,6 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    // ⚙️ Coroutine du blink
     private IEnumerator BlinkCoroutine()
     {
         while (true)
