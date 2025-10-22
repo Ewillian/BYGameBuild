@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [Header("Menus containers")]
     public GameObject ContainerMenuPause;
     public GameObject ContainerMenuEnd;
+    public GameObject ContainerTutorial;
 
     [Header("Debug container")]
     public GameObject ContainerDebugUi;
@@ -137,48 +138,20 @@ public class GameManager : MonoBehaviour
         int newDifficulty = PlayerPrefs.GetInt("DifficultyLevel", (int)DifficultyEnum.Easy);
         _difficulty.SetDifficulty(DifficultyEnum.IsDefined(typeof(DifficultyEnum), newDifficulty) ? (DifficultyEnum)newDifficulty : DifficultyEnum.Easy);
 
-        GameObject gameDurationUiDebug_GameObject = GameObject.Find("_gameDurationValue");
-        if (gameDurationUiDebug_GameObject != null)
-        {
-            _gameDurationUiDebug = gameDurationUiDebug_GameObject.GetComponent<TMP_Text>();
-        }
-
-        GameObject scoreValueUiDebug_GameObject = GameObject.Find("_scoreValue");
-        if (scoreValueUiDebug_GameObject != null)
-        {
-            _scoreUiDebug = scoreValueUiDebug_GameObject.GetComponent<TMP_Text>();
-        }
-
-        GameObject targetScoreValue_GameObject = GameObject.Find("_targetScoreValue");
-        if (targetScoreValue_GameObject != null)
-        {
-            _targetScoreUiDebug = targetScoreValue_GameObject.GetComponent<TMP_Text>();
-        }
-
-        GameObject triggerBeforeTimerValue_GameObject = GameObject.Find("_triggerBeforeTimerValue");
-        if (triggerBeforeTimerValue_GameObject != null)
-        {
-            _triggerBeforeTimerUiDebug = triggerBeforeTimerValue_GameObject.GetComponent<TMP_Text>();
-        }
-
-        GameObject triggerDuringTimerValue_GameObject = GameObject.Find("_triggerDuringTimerValue");
-        if (triggerDuringTimerValue_GameObject != null)
-        {
-            _triggerDuringTimerUiDebug = triggerDuringTimerValue_GameObject.GetComponent<TMP_Text>();
-        }
-
-        GameObject currentMandoStateValue_GameObject = GameObject.Find("_currentMandoStateValue");
-        if (currentMandoStateValue_GameObject != null)
-        {
-            _currentMandoStateUiDebug = currentMandoStateValue_GameObject.GetComponent<TMP_Text>();
-        }
-
+        InitLogs();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        StartGame();
+        if (PlayerPrefs.GetInt("DifficultyLevel") == (int)DifficultyEnum.Tutorial)
+        {
+            ContainerTutorial.SetActive(true);
+        }
+        else
+        {
+            StartGame();
+        }
     }
 
     private void OnDestroy()
@@ -279,6 +252,7 @@ public class GameManager : MonoBehaviour
 
     private void UpdatePowerTargetEvent()
     {
+        Debug.Log("po");
         _events.Notify(EventEnum.PowerTarget, (int) _targetScore);
     }
 
@@ -342,10 +316,10 @@ public class GameManager : MonoBehaviour
             StopGame(true);
         }
     }
-    
+
     private void UpdateDebugUi()
     {
-        if(!_gameDurationUiDebug.IsUnityNull())
+        if (!_gameDurationUiDebug.IsUnityNull())
         {
             _gameDurationUiDebug.SetText(_gameDuration.ToString());
         }
@@ -354,7 +328,7 @@ public class GameManager : MonoBehaviour
             Debug.Log($"_gameDuration: {_gameDuration}");
         }
 
-        if(!_scoreUiDebug.IsUnityNull())
+        if (!_scoreUiDebug.IsUnityNull())
         {
             _scoreUiDebug.SetText(_score.ToString());
         }
@@ -363,7 +337,7 @@ public class GameManager : MonoBehaviour
             Debug.Log($"_score: {_score}");
         }
 
-        if(!_targetScoreUiDebug.IsUnityNull())
+        if (!_targetScoreUiDebug.IsUnityNull())
         {
             _targetScoreUiDebug.SetText(_targetScore.ToString());
         }
@@ -372,7 +346,7 @@ public class GameManager : MonoBehaviour
             Debug.Log($"_targetScore: {_targetScore}");
         }
 
-        if(!_triggerBeforeTimerUiDebug.IsUnityNull())
+        if (!_triggerBeforeTimerUiDebug.IsUnityNull())
         {
             _triggerBeforeTimerUiDebug.SetText(_triggerBeforeTimer.ToString());
         }
@@ -381,7 +355,7 @@ public class GameManager : MonoBehaviour
             Debug.Log($"_triggerBeforeTimer: {_triggerBeforeTimer}");
         }
 
-        if(!_triggerDuringTimerUiDebug.IsUnityNull())
+        if (!_triggerDuringTimerUiDebug.IsUnityNull())
         {
             _triggerDuringTimerUiDebug.SetText(_triggerDuringTimer.ToString());
         }
@@ -390,13 +364,52 @@ public class GameManager : MonoBehaviour
             Debug.Log($"_triggerDuringTimer: {_triggerDuringTimer}");
         }
 
-        if(!_currentMandoStateUiDebug.IsUnityNull())
+        if (!_currentMandoStateUiDebug.IsUnityNull())
         {
             _currentMandoStateUiDebug.SetText(_currentMandoEnum.ToString());
         }
         else
         {
             Debug.Log($"_currentMandoStateValue: {_currentMandoEnum}");
+        }
+    }
+    
+        private void InitLogs()
+    {
+        GameObject gameDurationUiDebug_GameObject = GameObject.Find("_gameDurationValue");
+        if (gameDurationUiDebug_GameObject != null)
+        {
+            _gameDurationUiDebug = gameDurationUiDebug_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject scoreValueUiDebug_GameObject = GameObject.Find("_scoreValue");
+        if (scoreValueUiDebug_GameObject != null)
+        {
+            _scoreUiDebug = scoreValueUiDebug_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject targetScoreValue_GameObject = GameObject.Find("_targetScoreValue");
+        if (targetScoreValue_GameObject != null)
+        {
+            _targetScoreUiDebug = targetScoreValue_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject triggerBeforeTimerValue_GameObject = GameObject.Find("_triggerBeforeTimerValue");
+        if (triggerBeforeTimerValue_GameObject != null)
+        {
+            _triggerBeforeTimerUiDebug = triggerBeforeTimerValue_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject triggerDuringTimerValue_GameObject = GameObject.Find("_triggerDuringTimerValue");
+        if (triggerDuringTimerValue_GameObject != null)
+        {
+            _triggerDuringTimerUiDebug = triggerDuringTimerValue_GameObject.GetComponent<TMP_Text>();
+        }
+
+        GameObject currentMandoStateValue_GameObject = GameObject.Find("_currentMandoStateValue");
+        if (currentMandoStateValue_GameObject != null)
+        {
+            _currentMandoStateUiDebug = currentMandoStateValue_GameObject.GetComponent<TMP_Text>();
         }
     }
 

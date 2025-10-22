@@ -114,6 +114,7 @@ public class DifficultyManager
     {
         _difficultyDictionary = new Dictionary<DifficultyEnum, DifficultyStats>
         {
+            { DifficultyEnum.Tutorial, new DifficultyStats(120, 5, 2, 10, 5, 25, 3, 3, 13) },
             { DifficultyEnum.Easy, new DifficultyStats(120, 5, 2, 10, 5, 25, 3, 3, 13) },
             { DifficultyEnum.Normal, new DifficultyStats(90, 4, 4, 12, 3, 25, 2, 3, 10) },
             { DifficultyEnum.Hard, new DifficultyStats(60, 3, 5, 15, 2, 20, 0, 4, 7) }

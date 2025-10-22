@@ -11,6 +11,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private TMP_Text _tutorialText;
     [SerializeField] private Button _previousButton;
     [SerializeField] private Button _nextButton;
+    [SerializeField] private Button _mainMenuButton;
     [SerializeField] private List<GameObject> _gameObjectList;
 
     [Header("Blink Settings")]
@@ -88,6 +89,16 @@ public class TutorialManager : MonoBehaviour
             case 2:
                 SetTarget(_gameObjectList.ElementAt(2));
                 break;
+            case 3:
+                StopBlink();
+                ClearTarget();
+                _nextButton.gameObject.SetActive(true);
+                _mainMenuButton.gameObject.SetActive(false);
+                break;
+            case 4:
+                _nextButton.gameObject.SetActive(false);
+                _mainMenuButton.gameObject.SetActive(true);
+                break;
         }
 
         if (hasTarget) StartBlink();
@@ -142,7 +153,6 @@ public class TutorialManager : MonoBehaviour
             Debug.LogWarning("Impossible de clignoter : aucune cible définie.");
             return;
         }
-        Debug.Log($"notnull :{blinkRoutine != null}");
         if (blinkRoutine == null)
             blinkRoutine = StartCoroutine(BlinkCoroutine());
     }

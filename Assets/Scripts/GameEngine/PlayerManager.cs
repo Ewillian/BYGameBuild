@@ -79,6 +79,7 @@ public class PlayerManager : MonoBehaviour, IEventListener
 
         if (InputManager.Action())
         {
+            Debug.Log("action");
             PowerValue = PowerValue + POWER_VALUE_GAIN < _slider.maxValue ? PowerValue + POWER_VALUE_GAIN : _slider.maxValue;
         }
         else
