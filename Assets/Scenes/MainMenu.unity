@@ -2950,7 +2950,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1526744283051685293, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
   m_PrefabInstance: {fileID: 1505556683}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1219224913}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b743370ac3e4ec2a1668f5455a8ef8a, type: 3}
@@ -5354,6 +5354,23 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5845968242474034362, guid: 92e7963cb61bcda44ba78992de3492f3, type: 3}
   m_PrefabInstance: {fileID: 3160130437260000932}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1219224913 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7196415113061846224, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
+  m_PrefabInstance: {fileID: 1505556683}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1219224914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219224913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c69bf25a4c660944a8150780e8dbd71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1266460133
 GameObject:
   m_ObjectHideFlags: 0
@@ -5898,6 +5915,46 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1526744283051685293, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[0].m_Text
+      value: English
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526744283051685293, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[1].m_Text
+      value: Francais
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526744283051685293, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[2].m_Text
+      value: Ghorman
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526744283051685293, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526744283051685293, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526744283051685293, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1219224914}
+    - target: {fileID: 1526744283051685293, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526744283051685293, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnChangeLanguage
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526744283051685293, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LanguageSelection, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526744283051685293, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3972971724003055489, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6005,7 +6062,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7196415113061846224, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1219224914}
   m_SourcePrefab: {fileID: 100100000, guid: e8e51f628380a3d4f90b4eb805ee5c94, type: 3}
 --- !u!224 &1505556684 stripped
 RectTransform:
