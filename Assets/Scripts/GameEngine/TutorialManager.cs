@@ -126,9 +126,13 @@ public class TutorialManager : MonoBehaviour
         if (hasTarget)
         {
             if (targetRenderer != null)
+            {
                 originalColor = targetRenderer.material.color;
+            }
             else if (spriteRenderer != null)
+            {
                 originalColor = spriteRenderer.color;
+            }
             else
                 originalColor = uiGraphic.color;
         }
@@ -153,8 +157,8 @@ public class TutorialManager : MonoBehaviour
             Debug.LogWarning("Impossible de clignoter : aucune cible définie.");
             return;
         }
-        if (blinkRoutine == null)
-            blinkRoutine = StartCoroutine(BlinkCoroutine());
+        
+        blinkRoutine ??= StartCoroutine(BlinkCoroutine());
     }
 
     public void StopBlink()

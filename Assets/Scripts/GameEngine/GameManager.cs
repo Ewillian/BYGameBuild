@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        if (PlayerPrefs.GetInt("DifficultyLevel") == (int)DifficultyEnum.Tutorial)
+        if (DifficultyEnum.Tutorial == _difficulty.GetDifficulty())
         {
             ContainerTutorial.SetActive(true);
         }
@@ -252,7 +252,6 @@ public class GameManager : MonoBehaviour
 
     private void UpdatePowerTargetEvent()
     {
-        Debug.Log("po");
         _events.Notify(EventEnum.PowerTarget, (int) _targetScore);
     }
 
@@ -374,7 +373,7 @@ public class GameManager : MonoBehaviour
         }
     }
     
-        private void InitLogs()
+    private void InitLogs()
     {
         GameObject gameDurationUiDebug_GameObject = GameObject.Find("_gameDurationValue");
         if (gameDurationUiDebug_GameObject != null)
