@@ -102,9 +102,15 @@ public class TutorialManager : MonoBehaviour
                 _nextButton.gameObject.SetActive(false);
                 _mainMenuButton.gameObject.SetActive(true);
                 break;
+            default:
+                Debug.LogWarning("No more tutorial steps available.");
+                break;
         }
 
-        if (hasTarget) StartBlink();
+        if (hasTarget)
+        {
+            StartBlink();
+        }
 
         _tutorialText.SetText(_tutorialMessages.ElementAt(_step));
     }
@@ -116,7 +122,7 @@ public class TutorialManager : MonoBehaviour
         if (newTarget == null)
         {
             ClearTarget();
-            Debug.LogWarning("Aucune cible (null).");
+            Debug.LogWarning("No target (null).");
             return;
         }
 
@@ -141,7 +147,7 @@ public class TutorialManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"L'objet {newTarget.name} n'a pas de Renderer, SpriteRenderer ni Graphic !");
+            Debug.LogWarning($"The object {newTarget.name} has no Renderer, SpriteRenderer, or Graphic!");
         }
     }
 
@@ -157,7 +163,7 @@ public class TutorialManager : MonoBehaviour
     {
         if (!hasTarget)
         {
-            Debug.LogWarning("Impossible de clignoter : aucune cible définie.");
+            Debug.LogWarning("Unable to blink: no target defined.");
             return;
         }
         
