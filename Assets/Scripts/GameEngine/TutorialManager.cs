@@ -55,7 +55,10 @@ public class TutorialManager : MonoBehaviour
         _tutorialMessages = new List<string>
         {
             "L'objectif du jeu est de récupérer le balle de Grogu",
-            "Pour cela, il faut amener la jauge à l'indicateur", "Attention ! Si mando vous voit, il resserrera la boule !", "Vous devez y arriver avant la fin du temps imparti.", "Que la force soit avec vous !"
+            "Pour cela, il faut amener la jauge à l'indicateur",
+            "Attention ! Si mando vous voit, il resserrera la boule !",
+            "Vous devez y arriver avant la fin du temps imparti.",
+            "Que la force soit avec vous !"
         };
     }
 
